@@ -75,7 +75,7 @@ form <- ~ DEPTH_c +
   POP_STATUS +
   SITE_SLOPE_400m_c +
   #DEPTH_c:POP_STATUS +
-  s(DEPTH_c, by="POP_STATUS") +
+  s(DEPTH_c, by=POP_STATUS) +
   s(DEPTH_c, SITE_SLOPE_400m_c) +
   (1|OBS_YEAR) +
   (1|OBS_YEAR:ECOREGION) + 
