@@ -1,5 +1,8 @@
 library(tidyverse)
 library(brms)
+
+inv_logit <- function(z) 1/(1 + exp(-z))
+
 # Finalized on 26th July 2022
 
 # By LE Richardson, AJ Delargy and P Neubauer 
