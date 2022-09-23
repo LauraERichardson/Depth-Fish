@@ -1,12 +1,14 @@
 
 # By LE Richardson, AJ Delargy and P Neubauer 
 library(brms)
-library(Ternary)
+if(!require(Ternary)) install.packages('Ternary')
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
 ############## display percentage of random effect variance from each other as a ternary plot 
+
+png('Figure5.png',width = 7, height = 6, units = 'in', res=150)
 
 # Figure 5
 gmean <- function(x) exp(mean(log(x)))
@@ -42,4 +44,5 @@ for(j in 1:length(models)){
   TernaryArrows(dum1, c(0,1-dum2[3],dum2[3]), length = 0.02, col ='black')
 }
 
+dev.off()
 

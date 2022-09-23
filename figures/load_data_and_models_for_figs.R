@@ -1,5 +1,13 @@
-load('intermed_data/Depth_study_fish_data.RData', v=T)
-load('intermed_data/model_options.RData')
+
+if(as.logical(Sys.getenv('CLOUD_RUN', F))){
+  load('/input/Depth_study_fish_data.RData', v=T)
+  load('/input/model_options.RData') 
+  mod_dir <- '/input/'
+} else {
+  load('../intermed_data/Depth_study_fish_data.RData', v=T)
+  load('../intermed_data/model_options.RData')
+  mod_dir <- "../model_output/"
+}
 
 ####---- load models ---####
 
@@ -15,7 +23,7 @@ dats <- c("fish","PRIM","PLANK","SEC","PISC")
 ord <- sapply(input_frame$SHORT, grep, models, ignore.case = T)
 
 lapply(1:length(models), function(idx){
-  assign(models[ord[idx]], read_rds(paste0("model_output/",
+  assign(models[ord[idx]], read_rds(paste0(mod_dir,
                                            input_frame$SHORT[idx],"/",
                                            input_frame$SHORT[idx],'_mod.rds')),
          envir = globalenv()

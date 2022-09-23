@@ -44,6 +44,9 @@ pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   summarise(rat_pop = rat[2]/rat[1]) %>% # populated over unpopulated
   group_by(trophic_group, DEPTH) %>%
   summarise(prob=mean(rat_pop>1)) %>%  # probability that fish biomass at populated islands increases faster than at unpopulated islands
-  pivot_wider(names_from = trophic_group, values_from = prob)
+  pivot_wider(names_from = trophic_group, values_from = prob) %>%
+  write_csv('table2.csv')
+
+
   
 

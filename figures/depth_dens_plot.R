@@ -10,7 +10,6 @@ pphu <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
                                    "DEPTH"=seq(0,30, l=100), 
-                                   "OBS_YEAR"=levels(set$OBS_YEAR)[1], 
                                    "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE)))
   newdat$DEPTH_c <- (newdat$DEPTH - mean(fish$DEPTH))/sd(fish$DEPTH)
   newdat$trophic_group <- factor(nms[i], levels = nms)
@@ -30,8 +29,7 @@ phu <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   pp <- posterior_epred(get(models[i]), 
                         newdata = get(models[i])$data %>% 
-                          mutate(OBS_YEAR=levels(set$OBS_YEAR)[1],
-                                 SITE_SLOPE_400m_c=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE)))
+                          mutate(SITE_SLOPE_400m_c=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE)))
   
   data.frame(dens = posterior_summary(pp)[,1],
              DEPTH = get(models[i])$data$DEPTH*sd(fish$DEPTH) + mean(fish$DEPTH),
@@ -64,8 +62,10 @@ ggplot() +
   )
 
 
-###### 2. Interaction effects
+ggsave('Figure2_gg.png',width = 7, height = 6, units = 'in',dpi = 150)
 
+###### 2. Interaction effects
+png('Figure2.png',width = 7, height = 6, units = 'in', res=150)
 # name of response variable used in model
 responses <- c("TotFish","PRIMARY","PLANKTIVORE","SECONDARY","PISCIVORE")
 
@@ -85,7 +85,7 @@ for(i in 1:length(dats)){
   set <- droplevels(set)
   
   #newdat <- expand.grid("POP_STATUS"=levels(set$POP_STATUS), "DEPTH"=seq(min(set$DEPTH),max(set$DEPTH), length.out=25), "OBS_YEAR"=levels(set$OBS_YEAR), "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c), "ISLAND"=NA, "ECOREGION"=NA, "SITE"=NA, "DIVER"=NA)
-  newdat <- expand.grid("POP_STATUS"=levels(set$POP_STATUS), "DEPTH"=seq(min(set$DEPTH),max(set$DEPTH), length.out=25), "OBS_YEAR"=levels(set$OBS_YEAR)[1], "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c),re_formula =NA)
+  newdat <- expand.grid("POP_STATUS"=levels(set$POP_STATUS), "DEPTH"=seq(min(set$DEPTH),max(set$DEPTH), length.out=25),"SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c),re_formula =NA)
   
   # prepare data for predictions with slope fixed at mean. First two years are used because of interactions involving year 
   
@@ -198,5 +198,5 @@ for(i in 1:length(dats)){
 mtext("Depth (m)", side=1, line=-1, outer=TRUE)
 mtext("Fish biomass (kg/ha)", side=2,line=-1, outer=TRUE)
 #legend.fun("top", legend=c("Populated", rep("Unpopulated", length(models))), lty=1, lwd=3, col=c("gray55",mycols), bty='n', cex=1.2, ncol=length(models)+1)
-
+dev.off()
 ####

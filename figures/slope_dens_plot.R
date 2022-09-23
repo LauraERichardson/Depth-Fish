@@ -7,14 +7,12 @@ source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
 ########## Figure S7
-
 #slope and population status: ggplot version
 
 pphus <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
                                    "DEPTH_c"=mean(set$DEPTH_c), 
-                                   "OBS_YEAR"=levels(set$OBS_YEAR)[1], 
                                    "SITE_SLOPE_400m"=seq(min(set$SITE_SLOPE_400m), max(set$SITE_SLOPE_400m), l=100)))
   newdat$SITE_SLOPE_400m_c <- (newdat$SITE_SLOPE_400m - mean(fish$SITE_SLOPE_400m))/sd(fish$SITE_SLOPE_400m)
   newdat$trophic_group <- factor(nms[i], levels = nms)
@@ -34,8 +32,7 @@ phus <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   pp <- posterior_epred(get(models[i]), 
                         newdata = get(models[i])$data %>% 
-                          mutate(OBS_YEAR=levels(set$OBS_YEAR)[1],
-                                 DEPTH_c=mean(set$DEPTH_c)))
+                          mutate(DEPTH_c=mean(set$DEPTH_c)))
   
   data.frame(dens = posterior_summary(pp)[,1],
              SITE_SLOPE_400m = get(models[i])$data$SITE_SLOPE_400m*sd(fish$SITE_SLOPE_400m) + mean(fish$SITE_SLOPE_400m),
@@ -70,8 +67,12 @@ ggplot() +
   )
 
 
+ggsave('FigureS7_gg.png',width = 7, height = 6, units = 'in',dpi = 150)
+
+
 ########## Figure S7
 
+png('FigureS7.png',width = 7, height = 6, units = 'in', res=150)
 #slope and population status:
 
 # name of response variable used in model
@@ -204,5 +205,5 @@ for(i in 1:length(dats)){
 mtext("Bathymetric steepness (°)", side=1, line=-1, outer=TRUE)
 mtext("Fish biomass (kg/ha)", side=2,line=-1, outer=TRUE)
 #legend.fun("top", legend=c("Populated", rep("Unpopulated", length(models))), lty=1, lwd=3, col=c("gray55",mycols), bty='n', cex=1.2, ncol=length(models)+1)
-
+dev.off()
 ####

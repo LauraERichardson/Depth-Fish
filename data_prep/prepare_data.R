@@ -2,7 +2,7 @@ require(tidyverse)
 
 #### Uncapped, raw SPC cylinder replicate data
 #### PHIL NOTE - DO NOT SET WD - SCRIPT SHOULD BE EXECUTED IN RELEVANT DIR OR CONTAIN RELATIVE PATHS TO EXECUTION PATH
-fish<-read.csv("data/Fishbiomass_depth_Pacific2010-2014.csv", header = TRUE,strip.white = T) 
+fish<-read.csv("../data/Fishbiomass_depth_Pacific2010-2014.csv", header = TRUE,strip.white = T) 
 
 # remove site slope NAs 
 fish <- filter(fish, !is.na(SITE_SLOPE_400m))
@@ -41,5 +41,6 @@ UNPOP<-subset(fish,POP_STATUS=="U") %>% droplevels
 fish$DEPTH_c <-scale(fish$DEPTH, center = TRUE, scale = TRUE)
 fish$SITE_SLOPE_400m_c<-scale(fish$SITE_SLOPE_400m, center = TRUE, scale = TRUE)
 
-save.image('intermed_data/Depth_study_fish_data.RData')
-write.csv(fish,"intermed_data/Depth_study_fish_data.csv")
+dir.create('../intermed_data')
+save.image('../intermed_data/Depth_study_fish_data.RData')
+write.csv(fish,"../intermed_data/Depth_study_fish_data.csv")

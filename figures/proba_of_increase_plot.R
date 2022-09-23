@@ -1,7 +1,8 @@
 library(tidyverse)
-library(ggridges)
 library(brms)
 library(tidybayes)
+
+if(!require(ggridges)) install.packages('ggridges')
 
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
@@ -16,7 +17,6 @@ pp <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
                                    "DEPTH"=seq(0,30, by=10), 
-                                   "OBS_YEAR"=levels(set$OBS_YEAR)[1], 
                                    "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE), 
                                    "ISLAND"='FOO', 
                                    "ECOREGION"='FOO', 
@@ -94,6 +94,7 @@ g2 <- ggplot() +
 
 g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
 
+ggsave('Figure3_alt.png',width = 7, height = 6, units = 'in',dpi = 150)
 
 pp_bdp2 <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
@@ -134,6 +135,9 @@ pp_bdp2 %>%
     strip.text.y = element_blank()
   )
 
+ggsave('Figure3_gg.png',width = 7, height = 6, units = 'in',dpi = 150)
+
+png('Figure3.png',width = 7, height = 6, units = 'in', res=150)
 # here you can pick your TotFish units increase threshold you are interested in (units g per m2) (but results can be intepreted as kg/ha as well)
 # where 1 g/m2 = 10 kg/ha
 #thres <- c(1.125,1.25,1.5,2,3)
@@ -264,3 +268,4 @@ mtext("Probability of increase", side=2, line=-0.5, outer=TRUE)
 mtext("Unpopulated", side=2, at=0.75, line=-0.5, outer=TRUE)
 mtext("Populated", side=2, at=0.25, line=-0.5, outer=TRUE)
 #legend.fun("top", legend=nms, pch=16, col=mycols, bty='n', ncol=length(nms), cex=1.5)
+dev.off()

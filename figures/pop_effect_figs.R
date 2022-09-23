@@ -10,7 +10,7 @@ source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
 # get fixed effects samples from posterior and calculate CIs (as quantiles)
-
+png('Figure1.png',width = 7, height = 6, units = 'in', res=150)
 allcis <- c()
 
 for(i in 1:length(models)){
@@ -86,3 +86,4 @@ axis(side=2,at=1:length(desired_order), labels=desired_order, las=1)  # add labe
 #axis(side=2,at=1:length(desired_order), labels=desired_order, las=1)  # add labels to y-axis
 #legend("topleft", legend=nms, pch=16, col=mycols, pt.cex=2, cex=1.5)
 
+dev.off()
