@@ -1,4 +1,4 @@
 docker: dragonflyscience/dragonverse-22.04:2022-09-12
 memory: 32
 cpu: 16
-triggers: "PACIFIC-FISH-DEPTH"
+triggers: ["PACIFIC-FISH-DEPTH"]
