@@ -1,8 +1,8 @@
 
 if(as.logical(Sys.getenv('CLOUD_RUN', F))){
-  load('/inputs/Depth_study_fish_data.RData', v=T)
-  load('/inputs/model_options.RData') 
-  mod_dir <- '/inputs/'
+  load('/input/PACIFIC-FISH-DEPTH-MODELS/Depth_study_fish_data.RData', v=T)
+  load('/input/PACIFIC-FISH-DEPTH-MODELS/model_options.RData') 
+  mod_dir <- '/input/PACIFIC-FISH-DEPTH-MODELS/'
 } else {
   load('../intermed_data/Depth_study_fish_data.RData', v=T)
   load('../intermed_data/model_options.RData')
