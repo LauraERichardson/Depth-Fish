@@ -166,8 +166,8 @@ run_depth_model <- function(input_frame,
 
 parallel::mclapply(c(1,4,5,2,3),function(m) {
   run_depth_model(input_frame[m,], 
-                  iter = 2500,
-                  warmup=500)
+                  iter = 25,
+                  warmup=5)
   }, mc.cores=3, mc.preschedule = F)
 
 save(input_frame, file = "../intermed_data/model_options.RData")
