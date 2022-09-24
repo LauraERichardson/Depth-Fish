@@ -166,8 +166,8 @@ run_depth_model <- function(input_frame,
 
 parallel::mclapply(c(1,4,5,2,3),function(m) {
   run_depth_model(input_frame[m,], 
-                  iter = 25,
-                  warmup=5)
+                  iter = 2500,
+                  warmup=500)
   }, mc.cores=3, mc.preschedule = F)
 
 save(input_frame, file = "../intermed_data/model_options.RData")
@@ -177,10 +177,10 @@ if(as.logical(Sys.getenv('CLOUD_RUN', F))){
   sapply(input_frame$SHORT, function(d) dir.create(file.path('/output', d)))
   
   # copy model files and diags to cloud bucket
-  mod_files <- dir('../model_output/', recursive = T)
-  sapply(mod_files, function(f) file.copy(f, file.path('/output', f)))
+  mod_files <- dir('../model_output/', recursive = T, full.names = T)
+  sapply(mod_files, function(f) file.copy(f, file.path('/output', strsplit(f,'//')[[1]][2])))
   
-  int_files <- dir('../intermed_data/', recursive = T)
-  sapply(int_files, function(f) file.copy(f, file.path('/output', f)))
+  int_files <- dir('../intermed_data/', recursive = T, full.names = T)
+  sapply(int_files, function(f) file.copy(f, file.path('/output', strsplit(f,'//')[[1]][2])))
   
 }
