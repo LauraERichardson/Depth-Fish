@@ -1,7 +1,11 @@
 
 # By LE Richardson, AJ Delargy and P Neubauer 
+
+require(tidyverse)
 library(brms)
 if(!require(Ternary)) install.packages('Ternary')
+require(Ternary)
+
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')

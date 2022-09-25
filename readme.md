@@ -17,5 +17,5 @@
  
  ### Tables
  
- # TABLE 1: proba of increase by trophic group, depth bin and pop status
- # TABLE 2: proba that density increases more rapidly with depth at populated islands relative to unpopulated islands, by trophic group and depth bin
+ - TABLE 1: proba of increase by trophic group, depth bin and pop status
+ - TABLE 2: proba that density increases more rapidly with depth at populated islands relative to unpopulated islands, by trophic group and depth bin
