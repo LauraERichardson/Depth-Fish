@@ -1,6 +1,7 @@
 library(tidyverse)
 library(brms)
 library(tidybayes)
+library(patchwork)
 
 if(!require(ggridges)) install.packages('ggridges')
 
