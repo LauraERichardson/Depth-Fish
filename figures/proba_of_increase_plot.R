@@ -21,7 +21,8 @@ pp <- parallel::mclapply(1:length(models), function(i) {
                                    "ISLAND"='FOO', 
                                    "ECOREGION"='FOO', 
                                    "SITE"='FOO',
-                                   "DIVER"='FOO'))
+                                   "DIVER"='FOO',
+                                  "OBS_YEAR"='FOO'))
   newdat$DEPTH_c <- (newdat$DEPTH - mean(set$DEPTH))/sd(set$DEPTH)
   newdat$trophic_group <- factor(nms[i], levels = nms)
   
