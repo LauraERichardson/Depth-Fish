@@ -1,5 +1,7 @@
 
 # By LE Richardson, AJ Delargy and P Neubauer 
+
+require(tidyverse)
 library(brms)
 if(!require(Ternary)) install.packages('Ternary')
 require(Ternary)
