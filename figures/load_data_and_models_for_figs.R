@@ -1,3 +1,4 @@
+require(tidyverse)
 
 if(as.logical(Sys.getenv('CLOUD_RUN', F))){
   load('/input/PACIFIC-FISH-DEPTH-MODELS/Depth_study_fish_data.RData', v=T)
