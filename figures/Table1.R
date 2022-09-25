@@ -118,8 +118,8 @@ rownames(popstore_dec) <- depnms
 unpopstore
 popstore
 
-write_csv(popstore, 'table1a.csv')
-write_csv(unpopstore, 'table1b.csv')
+write_csv(as.data.frame(popstore), 'table1a.csv')
+write_csv(as.data.frame(unpopstore), 'table1b.csv')
 
 
 # could just have calculated the decrease as 1 - the probability of increase: 
