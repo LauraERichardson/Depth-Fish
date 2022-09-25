@@ -2,6 +2,8 @@
 # Finalized on 26th July 2022
 
 # By LE Richardson, AJ Delargy and P Neubauer 
+
+require(tidyverse)
 library(brms)
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
