@@ -74,8 +74,8 @@ def_priors = c(set_prior('normal(0,2)', class='b'), #regressions pars
 form <- ~ DEPTH_c +
   POP_STATUS +
   SITE_SLOPE_400m_c +
-  #DEPTH_c:POP_STATUS +
-  s(DEPTH_c, by=POP_STATUS) +
+  DEPTH_c:POP_STATUS +
+  #s(DEPTH_c, by=POP_STATUS) +
   s(DEPTH_c, SITE_SLOPE_400m_c) +
   (1|OBS_YEAR) +
   (1|OBS_YEAR:ECOREGION) + 
