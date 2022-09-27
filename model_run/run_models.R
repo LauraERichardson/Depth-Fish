@@ -143,7 +143,7 @@ run_depth_model <- function(input_frame,
                          backend = 'cmdstanr',
                          file_refit = "always",
                          warmup = get('warmup'),
-                         control = list(adapt_delta=0.99),
+                         control = list(adapt_delta=0.995, max_treedepth = 12),
                          file = paste0("../model_output/",SHORT,"/",SHORT,"_mod"), 
                          refresh=10)
   
