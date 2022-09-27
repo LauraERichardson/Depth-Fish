@@ -1,8 +1,9 @@
 library(tidyverse)
 library(brms)
 
-inv_logit <- function(z) 1/(1 + exp(-z))
-
+inv_logit <- fu
+nction(z) 1/(1 + exp(-z))
+set.seed(123)
 # Finalized on 26th July 2022
 
 # By LE Richardson, AJ Delargy and P Neubauer 
@@ -136,7 +137,8 @@ run_depth_model <- function(input_frame,
                          prior = priors,
                          chains = 4,
                          thin = 4,
-                         cores=4,
+                         cores = 4,
+                         seed = 999,
                          iter = get('iter'),
                          backend = 'cmdstanr',
                          file_refit = "always",
