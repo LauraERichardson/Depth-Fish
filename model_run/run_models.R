@@ -1,8 +1,7 @@
 library(tidyverse)
 library(brms)
 
-inv_logit <- fu
-nction(z) 1/(1 + exp(-z))
+inv_logit <- function(z) 1/(1 + exp(-z))
 set.seed(123)
 # Finalized on 26th July 2022
 
