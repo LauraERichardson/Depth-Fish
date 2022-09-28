@@ -87,7 +87,7 @@ g2 <- ggplot() +
   facet_wrap(trophic_group~DEPTH, scales='free', ncol=3) + 
   ylab('Density') +
   xlab('% change with depth bin') +
-  geom_vline(xintercept=1, linetype=2) +
+  geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
     strip.background = element_blank(),
