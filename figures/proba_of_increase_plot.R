@@ -40,11 +40,11 @@ pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
     expect = (1-hu)*mu,
-    rat = expect/lag(expect)) %>%
+    rat = expect - lag(expect)) %>%
   filter(!is.na(rat)) %>%
   arrange(trophic_group, .draw, DEPTH,POP_STATUS) %>%
   group_by(trophic_group, .draw, DEPTH) %>%
-  summarise(rat_pop = rat[1]/rat[2])
+  summarise(rat_pop = rat[1] - rat[2])
 
 g1 <- pp_bd %>% 
   ggplot() + 
@@ -68,11 +68,11 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
     expect = (1-hu)*mu,
-    rat = expect/lag(expect)) %>%
+    rat = expect - lag(expect)) %>%
   filter(!is.na(rat)) %>%
   group_by(trophic_group) %>% 
   filter(rat <= quantile(rat,0.99))%>% 
-  mutate(rat = rat-1)
+  #mutate(rat = rat-1)
 
 g2 <- ggplot() + 
   geom_density_ridges2(
@@ -86,7 +86,7 @@ g2 <- ggplot() +
   scale_alpha_discrete('') +
   facet_wrap(trophic_group~DEPTH, scales='free', ncol=3) + 
   ylab('Density') +
-  xlab('% change with depth bin') +
+  xlab('Absolute change with depth bin') +
   geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
