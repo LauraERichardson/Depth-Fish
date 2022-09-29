@@ -3,8 +3,9 @@
 
 # By LE Richardson, AJ Delargy and P Neubauer 
 
-library(brms)
 library(tidyverse)
+library(brms)
+
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
