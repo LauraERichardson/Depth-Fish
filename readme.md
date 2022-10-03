@@ -1,4 +1,4 @@
-# Depth-Fish1
+# Depth-Fish
 ## Sequence of files to run:
 
  ### Data and models 
