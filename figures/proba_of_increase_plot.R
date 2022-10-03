@@ -14,6 +14,8 @@ source('plot_opts.R')
 # set up data frame to predict from the posterior across depths 0 to 30m in 10m jumps, with slope held constant (at mean)
 # calculate the changes 
 
+#delete this comment
+
 pp <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
