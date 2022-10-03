@@ -72,7 +72,7 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   filter(!is.na(rat)) %>%
   group_by(trophic_group) %>% 
   filter(rat <= quantile(rat,0.99))%>% 
-  #mutate(rat = rat-1)
+  mutate(rat = rat-0)
 
 g2 <- ggplot() + 
   geom_density_ridges2(
