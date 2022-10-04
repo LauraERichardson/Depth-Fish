@@ -78,7 +78,7 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
 
 g2 <- ggplot() + 
   geom_density_ridges2(
-    aes(x=rat, 
+    aes(x=rat*100, 
         y = POP_STATUS,
         fill=trophic_group,
         col=trophic_group

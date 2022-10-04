@@ -62,7 +62,7 @@ ggplot() +
   )
 
 
-ggsave('Figure2_gg.png',width = 10, height = 6, units = 'in',dpi = 150)
+ggsave('Figure2_gg.png',width = 10, height = 5, units = 'in',dpi = 150)
 
 ###### 2. Interaction effects
 png('Figure2.png',width = 9, height = 6, units = 'in', res=150)

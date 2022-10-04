@@ -67,7 +67,7 @@ ggplot() +
   )
 
 
-ggsave('FigureS7_gg.png',width = 7, height = 6, units = 'in',dpi = 150)
+ggsave('FigureS7_gg.png',width = 10, height = 5, units = 'in',dpi = 150)
 
 
 ########## Figure S7
