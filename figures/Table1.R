@@ -34,7 +34,6 @@ colnames(popstore_dec)<- nms
 for(i in 1: length(dats)){
   set <- get(dats[i])
   
-  #newdat <- expand.grid("POP_STATUS"=levels(set$POP_STATUS), "DEPTH"=seq(0,30, by=10), "OBS_YEAR"=levels(set$OBS_YEAR), "SITE_SLOPE_400m_c"=seq(min(set$SITE_SLOPE_400m_c,na.rm=TRUE),max(set$SITE_SLOPE_400m_c,na.rm=TRUE),length.out=25), "ISLAND"=NA, "ECOREGION"=NA, "SITE"=NA,"DIVER"=NA)
   newdat <- expand.grid("POP_STATUS"=levels(set$POP_STATUS), "DEPTH"=seq(0,30, by=10), "OBS_YEAR"=levels(set$OBS_YEAR), "SITE_SLOPE_400m_c"=seq(min(set$SITE_SLOPE_400m_c,na.rm=TRUE),max(set$SITE_SLOPE_400m_c,na.rm=TRUE),length.out=25), re_formula=NA)
   
   # centre and scale depth

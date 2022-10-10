@@ -58,7 +58,7 @@ g1 <- pp_bd %>%
   theme(
   strip.background = element_blank(),
   strip.text.x = element_blank(),
-  axis.text.x = element_text()
+  axis.text.x = element_blank()
 )
 
 pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
