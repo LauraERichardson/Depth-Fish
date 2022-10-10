@@ -16,7 +16,12 @@ pp <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
                                    "DEPTH"=seq(0,30, by=10), 
-                                   "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE)))
+                                   "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE),
+                                   "ISLAND"='FOO', 
+                                   "ECOREGION"='FOO', 
+                                   "SITE"='FOO',
+                                   "DIVER"='FOO',
+                                   "OBS_YEAR"='FOO'))
   
   newdat$DEPTH_c <- (newdat$DEPTH - mean(set$DEPTH))/sd(set$DEPTH)
   newdat$trophic_group <- factor(nms[i], levels = nms)
