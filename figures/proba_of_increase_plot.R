@@ -57,8 +57,8 @@ g1 <- pp_bd %>%
   cowplot::theme_cowplot() + 
   theme(
     axis.text.x = element_text(),
-    Strip.background = element_blank(),
-    strip.text.x = element_blank(),
+    strip.background = element_blank(),
+    strip.text.x = element_blank()
     
   )
 
