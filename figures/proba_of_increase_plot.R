@@ -11,21 +11,13 @@ source('plot_opts.R')
 
 ############ # Figure 3: Probability of proportional increase  (across 0-30m depth; at unpop islands; with slope held constant)
 
-# set up data frame to predict from the posterior across depths 0 to 30m in 10m jumps, with slope held constant (at mean)
-# calculate the changes 
-
-#delete this comment
 
 pp <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
                                    "DEPTH"=seq(0,30, by=10), 
-                                   "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE), 
-                                   "ISLAND"='FOO', 
-                                   "ECOREGION"='FOO', 
-                                   "SITE"='FOO',
-                                   "DIVER"='FOO',
-                                  "OBS_YEAR"='FOO'))
+                                   "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE)))
+  
   newdat$DEPTH_c <- (newdat$DEPTH - mean(set$DEPTH))/sd(set$DEPTH)
   newdat$trophic_group <- factor(nms[i], levels = nms)
   
@@ -61,7 +53,7 @@ g1 <- pp_bd %>%
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_blank()
+    axis.text.x = element_text()
   )
 
 pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
@@ -74,7 +66,7 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   filter(!is.na(rat)) %>%
   group_by(trophic_group) %>% 
   filter(rat <= quantile(rat,0.99))%>% 
-  mutate(rat = rat-0)
+  mutate(rat = rat - 0)
 
 g2 <- ggplot() + 
   geom_density_ridges2(
@@ -93,7 +85,9 @@ g2 <- ggplot() +
   cowplot::theme_cowplot() + 
   theme(
     strip.background = element_blank(),
-    strip.text.x = element_blank()
+    strip.text.x = element_blank(),
+    strip.text.y = element_text(colour = "black", fill = "white"),
+    strip.background = element_rect(colour = "black", fill = "white")
   )
 
 g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
