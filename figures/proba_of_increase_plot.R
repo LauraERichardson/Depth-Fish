@@ -75,7 +75,7 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
 
 g2 <- ggplot() + 
   geom_density_ridges2(
-    aes(x=rat, 
+    aes(x=rat*100, 
         y = POP_STATUS,
         fill=trophic_group,
         col=trophic_group
@@ -91,7 +91,7 @@ g2 <- ggplot() +
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_text(size = 8, angle = 30))
+    axis.text.x = element_text(size = 10, angle = 45))
 
 g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
 
