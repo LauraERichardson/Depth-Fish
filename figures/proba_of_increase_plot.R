@@ -91,8 +91,8 @@ g2 <- ggplot() +
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    strip.text.y = element_text(colour = "black", fill = "white"),
-    strip.background = element_rect(colour = "black", fill = "white")
+    #strip.text.y = element_text(colour = "black", fill = "white"),
+    #strip.background = element_rect(colour = "black", fill = "white")
   )
 
 g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
