@@ -56,9 +56,10 @@ g1 <- pp_bd %>%
   geom_vline(xintercept=1, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
-    strip.background = element_blank(),
+    axis.text.x = element_text(),
+    Strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_text()
+    
   )
 
 pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
