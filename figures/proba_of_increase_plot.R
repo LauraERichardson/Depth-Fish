@@ -56,10 +56,10 @@ g1 <- pp_bd %>%
   geom_vline(xintercept=1, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
-    strip.background = element_blank(),
-    strip.text.x = element_blank(),
-    axis.text.x = element_blank()
-  )
+  strip.background = element_blank(),
+  strip.text.x = element_blank(),
+  axis.text.x = element_blank()
+)
 
 pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
