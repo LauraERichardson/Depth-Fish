@@ -39,11 +39,11 @@ pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
     expect = (1-hu)*mu,
-    rat = expect - lag(expect)) %>%
+    rat = expect/lag(expect)) %>%
   filter(!is.na(rat)) %>%
   arrange(trophic_group, .draw, DEPTH,POP_STATUS) %>%
   group_by(trophic_group, .draw, DEPTH) %>%
-  summarise(rat_pop = rat[1] - rat[2])
+  summarise(rat_pop = rat[1]/rat[2])
 
 g1 <- pp_bd %>% 
   ggplot() + 
@@ -51,7 +51,7 @@ g1 <- pp_bd %>%
   scale_fill_manual('',values = mycols, guide='none') +
   scale_alpha_discrete('',labels = c('0m-10m','10m-20m','20m-30m')) +
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
-  xlab('Zonation ratio') + 
+  xlab('Zonation ratio (% change)') + 
   ylab('') +
   geom_vline(xintercept=1, linetype=2) +
   cowplot::theme_cowplot() + 
