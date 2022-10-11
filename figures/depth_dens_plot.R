@@ -112,7 +112,7 @@ g2 <- pp_bd %>%
 
 g1 + g2 + patchwork::plot_layout(widths=c(0.80,0.20))
 
-ggsave('Figure2_gg.png',width = 10, height = 5, units = 'in',dpi = 150)
+ggsave('Figure2_gg.png',width = 15, height = 5, units = 'in',dpi = 150)
 
 ###### 2. Interaction effects
 png('Figure2.png',width = 9, height = 6, units = 'in', res=150)
