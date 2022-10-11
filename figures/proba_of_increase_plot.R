@@ -63,8 +63,8 @@ g1 <- ggplot() +
   geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
-    strip.background = element_rect(colour = "black", fill = "white"),
-    strip.text = element_text(),
+    strip.background = element_blank(),
+    strip.text = element_blank(),
     axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
     )
   
@@ -95,7 +95,8 @@ g2 <- pp_bd %>%
   theme(
   strip.background = element_blank(),
   strip.text.x = element_blank(),
-  axis.text.x = element_blank()
+  axis.text.x = element_blank(),
+  legend.position="none"
 )
 
 # g3
