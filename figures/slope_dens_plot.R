@@ -1,6 +1,7 @@
 library(tidyverse)
 library(brms)
 library(tidybayes)
+library(patchwork)
 
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
@@ -65,6 +66,9 @@ ggplot() +
     strip.background = element_blank(),
     strip.text.x = element_text(face = 'bold')
   )
+
+
+
 
 
 ggsave('FigureS7_gg.png',width = 10, height = 5, units = 'in',dpi = 150)

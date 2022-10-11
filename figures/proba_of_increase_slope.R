@@ -9,7 +9,7 @@ source('plot_opts.R')
 
 ############ # Figure 4 Probability of proportional increase  
 
-png('Figure4.png',width = 7, height = 6, units = 'in', res=150)
+png('Figure4.png',width = 2, height = 5, units = 'in', res=150)
 # calculate the changes 
 
 thres <- c(1.25,1.5,2)   # 25%, 50%, 100% increase
