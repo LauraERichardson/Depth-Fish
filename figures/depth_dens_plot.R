@@ -110,9 +110,9 @@ g2 <- pp_bd %>%
     axis.text.x = element_blank()
   )
 
-g1 + g2 + patchwork::plot_layout(widths=c(0.85,0.15))
+g1 + g2 + patchwork::plot_layout(widths=c(0.90,0.10))
 
-ggsave('Figure2_gg.png',width = 10, height = 5, units = 'in',dpi = 150)
+ggsave('Figure2_gg.png',width = 12, height = 5, units = 'in',dpi = 150)
 
 ###### 2. Interaction effects
 png('Figure2.png',width = 9, height = 6, units = 'in', res=150)
