@@ -1,6 +1,7 @@
 library(tidyverse)
 library(brms)
 library(tidybayes)
+library(patchwork)
 
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
@@ -24,7 +25,6 @@ pp_bd <- pphu %>%
   group_by(trophic_group,  POP_STATUS, DEPTH) %>%
   median_qi(.epred, .width = 0.75)
 
-# data std to 2010
 phu <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   pp <- posterior_epred(get(models[i]), 
@@ -43,7 +43,7 @@ phu <- phu %>% inner_join(pp_bd %>% group_by(trophic_group) %>% summarise(md = m
   group_by(trophic_group) %>%
   filter(dens<=md*1.05)
 
-ggplot() + 
+g1 <- ggplot() + 
   geom_point(aes(x=DEPTH, y=dens*10,col=trophic_group), alpha=0.2, data=phu%>% filter(POP_STATUS=='U')) +
   geom_point(aes(x=DEPTH, y=dens*10), col='grey50', alpha=0.05, data=phu%>% filter(POP_STATUS=='P')) +
   geom_ribbon(aes(x=DEPTH, fill=trophic_group, ymin=.lower*10, ymax=.upper*10),  alpha=0.5, data=pp_bd %>% filter(POP_STATUS=='U')) +
@@ -61,6 +61,56 @@ ggplot() +
     strip.text.x = element_text(face = 'bold')
   )
 
+pp <- parallel::mclapply(1:length(models), function(i) {
+  set <- get(dats[i])
+  newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
+                                   "DEPTH"=seq(0,30, by=10), 
+                                   "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE),
+                                   "ISLAND"='FOO', 
+                                   "ECOREGION"='FOO', 
+                                   "SITE"='FOO',
+                                   "DIVER"='FOO',
+                                   "OBS_YEAR"='FOO'))
+  
+  newdat$DEPTH_c <- (newdat$DEPTH - mean(set$DEPTH))/sd(set$DEPTH)
+  newdat$trophic_group <- factor(nms[i], levels = nms)
+  
+  newdat %>% 
+    add_epred_draws(get(models[i]), 
+                    re_formula = NA, seed = 123, dpar=TRUE)
+  
+}, mc.cores = 5) %>% bind_rows()
+
+
+pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
+  select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
+  arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
+  mutate(
+    hu = ifelse(is.na(hu),0,hu),
+    expect = (1-hu)*mu,
+    rat = expect - lag(expect)) %>%
+  filter(!is.na(rat)) %>%
+  arrange(trophic_group, .draw, DEPTH,POP_STATUS) %>%
+  group_by(trophic_group, .draw, DEPTH) %>%
+  summarise(rat_pop = rat[1] - rat[2])
+
+g2 <- pp_bd %>% 
+  ggplot() + 
+  geom_histogram(aes(x=rat_pop, fill=trophic_group, after_stat(density), group=factor(DEPTH), alpha=as.factor(DEPTH)),bins = 30) +
+  scale_fill_manual('',values = mycols, guide='none') +
+  scale_alpha_discrete('',labels = c('0m-10m','10m-20m','20m-30m')) +
+  facet_wrap(~trophic_group, scales='free', ncol = 1) +
+  xlab('Zonation ratio') + 
+  ylab('') +
+  geom_vline(xintercept=1, linetype=2) +
+  cowplot::theme_cowplot() + 
+  theme(
+    strip.background = element_blank(),
+    strip.text.x = element_blank(),
+    axis.text.x = element_blank()
+  )
+
+g1 + g2
 
 ggsave('Figure2_gg.png',width = 10, height = 5, units = 'in',dpi = 150)
 
