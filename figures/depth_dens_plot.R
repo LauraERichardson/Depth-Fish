@@ -57,7 +57,7 @@ g1 <- ggplot() +
   ylab("Fish biomass (kg/ha)") +
   cowplot::theme_cowplot() + 
   theme(
-    strip.background = element_rect(colour = "black"),
+    strip.background = element_rect(colour = "black", fill = "white"),
     strip.text.x = element_text(face = 'bold')
   )
 
