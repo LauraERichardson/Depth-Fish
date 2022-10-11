@@ -61,7 +61,7 @@ g1 <- ggplot() +
     strip.text.x = element_text(face = 'bold')
   )
 
-ggsave('Figure2_gg.png',width = 12, height = 5, units = 'in',dpi = 150)
+ggsave('Figure2_gg.png',width = 12, height = 5, units = 'in',dpi = 150, bg = "white")
 
 
 ###### 2. Interaction effects
