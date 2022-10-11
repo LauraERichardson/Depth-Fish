@@ -9,7 +9,7 @@ source('plot_opts.R')
 
 ############ # Figure 4 Probability of proportional increase  
 
-png('Figure4.png',width = 2, height = 5, units = 'in', res=150)
+png('Figure4.png',width = 2.5, height = 6, units = 'in', res=150)
 # calculate the changes 
 
 thres <- c(1.25,1.5,2)   # 25%, 50%, 100% increase
@@ -111,9 +111,7 @@ for(i in 1:length(unique(mainstore$model))){
   xs <- slopvals
   for(k in 1:dim(set)[1]){
     ys <- unlist(set[k,1:(dim(set)[2]-2)])
-    abline(h=0.5, col="gray55",lty=3)
     abline(h=0.75, col="gray55",lty=2)
-    abline(h=0.95, col="gray55",lty=1)
     lines(ys~xs, lwd=2, col=shadecols[i,k])
   }  
   axis(side=1, at=seq(floor(slopvals[1]/5)*5,ceiling(slopvals[length(slopvals)]/5)*5,by=5), labels=seq(floor(slopvals[1]/5)*5,ceiling(slopvals[length(slopvals)]/5)*5,by=5))
@@ -122,7 +120,7 @@ for(i in 1:length(unique(mainstore$model))){
   
 }
 
-mtext("Bathymetric steepness (degrees)", side=1, line=1, outer=TRUE)
+#mtext("Bathymetric steepness (degrees)", side=1, line=1, outer=TRUE)
 mtext("Probability of increase", side=2, line=1, outer=TRUE)
 mtext(rev(nms), side=2, line=-0.5, at=((1:5)/5)-0.1, outer=TRUE)
 dev.off()
