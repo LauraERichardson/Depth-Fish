@@ -37,11 +37,11 @@ pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
     expect = (1-hu)*mu,
-    rat = expect/lag(expect)) %>%
+    rat = expect - lag(expect)) %>%
   filter(!is.na(rat)) %>%
   arrange(trophic_group, .draw, DEPTH,POP_STATUS) %>%
   group_by(trophic_group, .draw, DEPTH) %>%
-  summarise(rat_pop = rat[2]/rat[1]) %>% # populated over unpopulated
+  summarise(rat_pop = rat[2] - rat[1]) %>% # populated over unpopulated
   group_by(trophic_group, DEPTH) %>%
   summarise(prob=mean(rat_pop>1)) %>%  # probability that fish biomass at populated islands increases faster than at unpopulated islands
   pivot_wider(names_from = trophic_group, values_from = prob) %>%
