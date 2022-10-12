@@ -7,7 +7,7 @@ library(patchwork)
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
-########## Figure S7
+########## Figure 4A
 #slope and population status: ggplot version
 
 pphus <- parallel::mclapply(1:length(models), function(i) {
@@ -63,20 +63,17 @@ ggplot() +
   ylab("Fish biomass (kg/ha)") +
   cowplot::theme_cowplot() + 
   theme(
-    strip.background = element_blank(),
+    strip.background = element_rect(colour = "black", fill = "white"),
     strip.text.x = element_text(face = 'bold')
   )
 
 
+ggsave('Figure4A_gg.png',width = 10, height = 5, units = 'in',dpi = 150)
 
 
+########## Figure 4A
 
-ggsave('FigureS7_gg.png',width = 10, height = 5, units = 'in',dpi = 150)
-
-
-########## Figure S7
-
-png('FigureS7.png',width = 7, height = 6, units = 'in', res=150)
+png('Figure4.png',width = 7, height = 6, units = 'in', res=150)
 #slope and population status:
 
 # name of response variable used in model
