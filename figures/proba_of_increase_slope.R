@@ -7,9 +7,9 @@ library(tidybayes)
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
-############ # Figure 4 Probability of proportional increase  
+############ # Figure 4B Probability of proportional increase  
 
-png('Figure4.png',width = 2.5, height = 7, units = 'in', res=150)
+png('Figure4B.png',width = 3, height = 7, units = 'in', res=150)
 # calculate the changes 
 
 thres <- c(1.25,1.5,2)   # 25%, 50%, 100% increase
@@ -78,7 +78,7 @@ for(i in 1: length(dats)){
   
 }
 
-#### now plot (Figure 4)
+#### now plot (Figure 4B)
 
 # split screen 
 
@@ -121,8 +121,8 @@ for(i in 1:length(unique(mainstore$model))){
 }
 
 #mtext("Bathymetric steepness (degrees)", side=1, line=1, outer=TRUE)
-mtext("Probability of increase", side=2, line=1, outer=TRUE)
-mtext(rev(nms), side=2, line=-0.5, at=((1:5)/5)-0.1, outer=TRUE)
+mtext("Probability of increased biomass", side=2, line=1, outer=TRUE)
+#mtext(rev(nms), side=2, line=-0.5, at=((1:5)/5)-0.1, outer=TRUE)
 dev.off()
 ###################################################################
 ###################################################################
