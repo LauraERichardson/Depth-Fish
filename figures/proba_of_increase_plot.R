@@ -96,7 +96,7 @@ g2 <- pp_bd %>%
   strip.background = element_blank(),
   strip.text.x = element_blank(),
   axis.text.x = element_blank(),
-  axis.text.y = element_text(size = 10)
+  axis.text.y = element_text(size = 10),
   legend.position="none"
 )
 
