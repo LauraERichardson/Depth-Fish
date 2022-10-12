@@ -68,7 +68,7 @@ ggplot() +
   )
 
 
-ggsave('Figure4A_gg.png',width = 10, height = 5, units = 'in',dpi = 150, bg = "white")
+ggsave('Figure4A_gg.png',width = 11, height = 5, units = 'in',dpi = 150, bg = "white")
 
 
 ########## Figure 4A
