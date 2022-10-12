@@ -86,7 +86,7 @@ g2 <- pp_bd %>%
   ggplot() + 
   geom_histogram(aes(x=rat_pop, fill=trophic_group, after_stat(density), group=factor(DEPTH), alpha=as.factor(DEPTH)),bins = 30) +
   scale_fill_manual('',values = mycols, guide='none') +
-  scale_alpha_discrete('',labels = c('0m-10m','10m-20m','20m-30m')) +
+  scale_alpha_discrete('',labels = c('0-10 m','10-20 m','20-30 m')) +
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
   xlab('Zonation ratio (absolute change)') + 
   ylab('') +
@@ -95,7 +95,7 @@ g2 <- pp_bd %>%
   theme(
   strip.background = element_blank(),
   strip.text.x = element_blank(),
-  axis.text.x = element_blank(),
+  axis.text.x = element_text(size = 10),
   legend.position="none"
 )
 
@@ -125,13 +125,13 @@ g3 <- pp_bd %>%
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_blank()
+    axis.text.x = element_text(size = 10)
   )
 
 
-g1+g2+g3 + patchwork::plot_layout(widths=c(0.70,0.15,0.15))
+g1+g2+g3 + patchwork::plot_layout(widths=c(0.60,0.20,0.20))
 
-ggsave('Figure3_alt.png',width = 12, height = 6, units = 'in',dpi = 150)
+ggsave('Figure3_alt.png',width = 10, height = 6, units = 'in',dpi = 150)
 
 pp_bdp2 <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
