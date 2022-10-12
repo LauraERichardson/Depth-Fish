@@ -59,7 +59,7 @@ g1 <- ggplot() +
   scale_alpha_discrete('') +
   facet_wrap(trophic_group~DEPTH, scales='free', ncol=3) + 
   ylab('Density') +
-  xlab('Absolute change with depth bin') +
+  xlab('Biomass change with depth bin (kg/ha)') +
   geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
