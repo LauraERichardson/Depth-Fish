@@ -11,19 +11,19 @@ source('plot_opts.R')
 
 ############ # Figure 3: Probability of proportional increase  (across 0-30m depth; at unpop islands; with slope held constant)
 
-# set up data frame to predict from the posterior across depths 0 to 30m in 10m jumps, with slope held constant (at mean)
-# calculate the changes 
+
 
 pp <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
                                    "DEPTH"=seq(0,30, by=10), 
-                                   "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE), 
+                                   "SITE_SLOPE_400m_c"=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE),
                                    "ISLAND"='FOO', 
                                    "ECOREGION"='FOO', 
                                    "SITE"='FOO',
                                    "DIVER"='FOO',
-                                  "OBS_YEAR"='FOO'))
+                                   "OBS_YEAR"='FOO'))
+  
   newdat$DEPTH_c <- (newdat$DEPTH - mean(set$DEPTH))/sd(set$DEPTH)
   newdat$trophic_group <- factor(nms[i], levels = nms)
   
@@ -34,6 +34,42 @@ pp <- parallel::mclapply(1:length(models), function(i) {
 }, mc.cores = 5) %>% bind_rows()
 
 
+# g1
+pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
+  select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
+  arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
+  mutate(
+    hu = ifelse(is.na(hu),0,hu),
+    expect = (1-hu)*mu,
+    rat = expect - lag(expect)) %>%
+  filter(!is.na(rat)) %>%
+  group_by(trophic_group) %>% 
+  filter(rat <= quantile(rat,0.99))%>% 
+  mutate(rat = rat - 1)
+
+g1 <- ggplot() + 
+  geom_density_ridges2(
+    aes(x=rat*100, 
+        y = POP_STATUS,
+        fill=trophic_group,
+        col=trophic_group
+    ),alpha=0.4,data=pp_bdp) +
+  scale_fill_manual('',values = mycols, guide='none') +
+  scale_colour_manual('',values = mycols, guide='none') +
+  scale_alpha_discrete('') +
+  facet_wrap(trophic_group~DEPTH, scales='free', ncol=3) + 
+  ylab('Density') +
+  xlab('Biomass change with depth bin (kg/ha)') +
+  geom_vline(xintercept=0, linetype=2) +
+  cowplot::theme_cowplot() + 
+  theme(
+    strip.background = element_blank(),
+    strip.text = element_blank(),
+    axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
+    )
+  
+
+# g2
 pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
   arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
@@ -46,57 +82,60 @@ pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   group_by(trophic_group, .draw, DEPTH) %>%
   summarise(rat_pop = rat[1]-rat[2])
 
-g1 <- pp_bd %>% 
+g2 <- pp_bd %>% 
   ggplot() + 
   geom_histogram(aes(x=rat_pop, fill=trophic_group, after_stat(density), group=factor(DEPTH), alpha=as.factor(DEPTH)),bins = 30) +
   scale_fill_manual('',values = mycols, guide='none') +
-  scale_alpha_discrete('',labels = c('0m-10m','10m-20m','20m-30m')) +
+  scale_alpha_discrete('',labels = c('0-10 m','10-20 m','20-30 m')) +
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
-  xlab('Zonation ratio') + 
+  xlab('Zonation ratio (absolute change)') + 
   ylab('') +
   geom_vline(xintercept=1, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
-    strip.background = element_blank(),
-    strip.text.x = element_blank(),
-    axis.text.x = element_blank()
-  )
+  strip.background = element_blank(),
+  strip.text.x = element_blank(),
+  axis.text.x = element_blank(),
+  axis.text.y = element_text(size = 10),
+  legend.position="none"
+)
 
-pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
+# g3
+pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
   arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
     expect = (1-hu)*mu,
-    rat = expect-lag(expect)) %>%
+    rat = expect/lag(expect)) %>%
   filter(!is.na(rat)) %>%
-  group_by(trophic_group) %>% 
-  filter(rat <= quantile(rat,0.99))%>% 
-  mutate(rat = rat-1)
+  arrange(trophic_group, .draw, DEPTH,POP_STATUS) %>%
+  group_by(trophic_group, .draw, DEPTH) %>%
+  summarise(rat_pop = rat[1]/rat[2])
 
-g2 <- ggplot() + 
-  geom_density_ridges2(
-    aes(x=rat*100, 
-        y = POP_STATUS,
-        fill=trophic_group,
-        col=trophic_group
-    ),alpha=0.4,data=pp_bdp) +
+g3 <- pp_bd %>% 
+  ggplot() + 
+  geom_histogram(aes(x=rat_pop, fill=trophic_group, after_stat(density), group=factor(DEPTH), alpha=as.factor(DEPTH)),bins = 30) +
   scale_fill_manual('',values = mycols, guide='none') +
-  scale_colour_manual('',values = mycols, guide='none') +
-  scale_alpha_discrete('') +
-  facet_wrap(trophic_group~DEPTH, scales='free', ncol=3) + 
-  ylab('Density') +
-  xlab('Absolute change with depth bin') +
+  scale_alpha_discrete('',labels = c('0-10 m','10-20 m','20-30 m')) +
+  facet_wrap(~trophic_group, scales='free', ncol = 1) +
+  xlab('Zonation ratio (% change)') + 
+  ylab('') +
+  geom_vline(xintercept=1, linetype=2) +
   geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
     strip.background = element_blank(),
-    strip.text.x = element_blank()
+    strip.text.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.text.y = element_text(size = 10),
+    legend.text = element_text(size=10)
   )
 
-g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
 
-ggsave('Figure3_alt.png',width = 7, height = 6, units = 'in',dpi = 150)
+g1+g2+g3 + patchwork::plot_layout(widths=c(0.70,0.15,0.15))
+
+ggsave('Figure3_alt.png',width = 10, height = 6, units = 'in',dpi = 150)
 
 pp_bdp2 <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   select(-OBS_YEAR,-SITE_SLOPE_400m_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%

@@ -1,6 +1,7 @@
 library(tidyverse)
 library(brms)
 library(tidybayes)
+library(patchwork)
 
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
@@ -24,7 +25,6 @@ pp_bd <- pphu %>%
   group_by(trophic_group,  POP_STATUS, DEPTH) %>%
   median_qi(.epred, .width = 0.75)
 
-# data std to 2010
 phu <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   pp <- posterior_epred(get(models[i]), 
@@ -43,7 +43,7 @@ phu <- phu %>% inner_join(pp_bd %>% group_by(trophic_group) %>% summarise(md = m
   group_by(trophic_group) %>%
   filter(dens<=md*1.05)
 
-ggplot() + 
+g1 <- ggplot() + 
   geom_point(aes(x=DEPTH, y=dens*10,col=trophic_group), alpha=0.2, data=phu%>% filter(POP_STATUS=='U')) +
   geom_point(aes(x=DEPTH, y=dens*10), col='grey50', alpha=0.05, data=phu%>% filter(POP_STATUS=='P')) +
   geom_ribbon(aes(x=DEPTH, fill=trophic_group, ymin=.lower*10, ymax=.upper*10),  alpha=0.5, data=pp_bd %>% filter(POP_STATUS=='U')) +
@@ -57,12 +57,12 @@ ggplot() +
   ylab("Fish biomass (kg/ha)") +
   cowplot::theme_cowplot() + 
   theme(
-    strip.background = element_blank(),
+    strip.background = element_rect(colour = "black", fill = "white"),
     strip.text.x = element_text(face = 'bold')
   )
 
+ggsave('Figure2_gg.png',width = 12, height = 5, units = 'in',dpi = 150, bg = "white")
 
-ggsave('Figure2_gg.png',width = 9, height = 6, units = 'in',dpi = 150)
 
 ###### 2. Interaction effects
 png('Figure2.png',width = 9, height = 6, units = 'in', res=150)
