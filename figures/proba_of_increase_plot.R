@@ -94,7 +94,7 @@ g2 <- pp_bd %>%
   theme(
   strip.background = element_blank(),
   strip.text.x = element_blank(),
-  axis.text.x = element_blank(),
+  #axis.text.x = element_blank(),
   axis.text.y = element_text(size = 10),
   legend.position="none"
 )
@@ -125,7 +125,7 @@ g3 <- pp_bd %>%
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_blank(),
+    #axis.text.x = element_blank(),
     axis.text.y = element_text(size = 10),
     legend.text = element_text(size=10)
   )
