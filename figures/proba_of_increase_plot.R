@@ -40,16 +40,15 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
-    expect = (1-hu)*mu,
+    expect = (1-hu)*mu*10, # convert to kg/ha
     rat = expect - lag(expect)) %>%
   filter(!is.na(rat)) %>%
   group_by(trophic_group) %>% 
-  filter(rat <= quantile(rat,0.99))%>% 
-  mutate(rat = rat - 1)
+  filter(rat <= quantile(rat,0.99))
 
 g1 <- ggplot() + 
   geom_density_ridges2(
-    aes(x=rat*100, 
+    aes(x=rat, 
         y = POP_STATUS,
         fill=trophic_group,
         col=trophic_group
@@ -75,7 +74,7 @@ pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
-    expect = (1-hu)*mu,
+    expect = (1-hu)*mu*10, # convert to kg/ha
     rat = expect-lag(expect)) %>%
   filter(!is.na(rat)) %>%
   arrange(trophic_group, .draw, DEPTH,POP_STATUS) %>%
@@ -88,14 +87,14 @@ g2 <- pp_bd %>%
   scale_fill_manual('',values = mycols, guide='none') +
   scale_alpha_discrete('',labels = c('0-10 m','10-20 m','20-30 m')) +
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
-  xlab('Zonation ratio (absolute change)') + 
+  xlab('Zonation diff.\n(absolute change)') + 
   ylab('') +
-  geom_vline(xintercept=1, linetype=2) +
+  geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
   strip.background = element_blank(),
   strip.text.x = element_blank(),
-  axis.text.x = element_blank(),
+  #axis.text.x = element_blank(),
   axis.text.y = element_text(size = 10),
   legend.position="none"
 )
@@ -119,15 +118,14 @@ g3 <- pp_bd %>%
   scale_fill_manual('',values = mycols, guide='none') +
   scale_alpha_discrete('',labels = c('0-10 m','10-20 m','20-30 m')) +
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
-  xlab('Zonation ratio (% change)') + 
+  xlab('Zonation ratio\n(% change)') + 
   ylab('') +
   geom_vline(xintercept=1, linetype=2) +
-  geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_blank(),
+    #axis.text.x = element_blank(),
     axis.text.y = element_text(size = 10),
     legend.text = element_text(size=10)
   )
