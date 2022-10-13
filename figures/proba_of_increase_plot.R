@@ -49,7 +49,7 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
 
 g1 <- ggplot() + 
   geom_density_ridges2(
-    aes(x=rat*100, 
+    aes(x=rat, 
         y = POP_STATUS,
         fill=trophic_group,
         col=trophic_group
@@ -90,7 +90,7 @@ g2 <- pp_bd %>%
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
   xlab('Zonation ratio (absolute change)') + 
   ylab('') +
-  geom_vline(xintercept=1, linetype=2) +
+  geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
   strip.background = element_blank(),
@@ -121,7 +121,6 @@ g3 <- pp_bd %>%
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
   xlab('Zonation ratio (% change)') + 
   ylab('') +
-  geom_vline(xintercept=1, linetype=2) +
   geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
   theme(
