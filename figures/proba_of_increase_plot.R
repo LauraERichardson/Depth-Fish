@@ -87,7 +87,7 @@ g2 <- pp_bd %>%
   scale_fill_manual('',values = mycols, guide='none') +
   scale_alpha_discrete('',labels = c('0-10 m','10-20 m','20-30 m')) +
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
-  xlab('Zonation ratio (absolute change)') + 
+  xlab('Zonation diff.\n(absolute change)') + 
   ylab('') +
   geom_vline(xintercept=0, linetype=2) +
   cowplot::theme_cowplot() + 
@@ -118,7 +118,7 @@ g3 <- pp_bd %>%
   scale_fill_manual('',values = mycols, guide='none') +
   scale_alpha_discrete('',labels = c('0-10 m','10-20 m','20-30 m')) +
   facet_wrap(~trophic_group, scales='free', ncol = 1) +
-  xlab('Zonation ratio (% change)') + 
+  xlab('Zonation ratio\n(% change)') + 
   ylab('') +
   geom_vline(xintercept=1, linetype=2) +
   cowplot::theme_cowplot() + 
