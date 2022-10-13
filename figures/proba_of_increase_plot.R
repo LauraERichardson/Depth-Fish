@@ -40,7 +40,7 @@ pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
-    expect = (1-hu)*mu,
+    expect = (1-hu)*mu*10, # convert to kg/ha
     rat = expect - lag(expect)) %>%
   filter(!is.na(rat)) %>%
   group_by(trophic_group) %>% 
@@ -75,7 +75,7 @@ pp_bd <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
   arrange(trophic_group, POP_STATUS, .draw, DEPTH) %>%
   mutate(
     hu = ifelse(is.na(hu),0,hu),
-    expect = (1-hu)*mu,
+    expect = (1-hu)*mu*10, # convert to kg/ha
     rat = expect-lag(expect)) %>%
   filter(!is.na(rat)) %>%
   arrange(trophic_group, .draw, DEPTH,POP_STATUS) %>%
