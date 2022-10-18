@@ -1,4 +1,4 @@
-# R FIGURE code for Richardson et al 2022
+# R code for Richardson et al 2022
 # Finalized on 26th July 2022
 
 # By LE Richardson, AJ Delargy and P Neubauer 
@@ -12,9 +12,8 @@ source('plot_opts.R')
 ###################################################################
 ###################################################################
 
-# Table 1
-
-# this is the same as above but now the threshold is 0, i.e. we want the probability of any increase 
+# Table S10
+# Probability of change in biomass with steepness
 
 # storage
 
@@ -33,13 +32,13 @@ colnames(popstore_dec)<- nms
 for(i in 1: length(dats)){
   set <- get(dats[i])
   
-  newdat <- expand.grid("POP_STATUS"=levels(set$POP_STATUS), "DEPTH"=seq(0,30, by=10), "OBS_YEAR"=levels(set$OBS_YEAR), "SITE_SLOPE_400m_c"=seq(min(set$SITE_SLOPE_400m_c,na.rm=TRUE),max(set$SITE_SLOPE_400m_c,na.rm=TRUE),length.out=25), re_formula=NA)
+  newdat <- expand.grid("POP_STATUS"=levels(set$POP_STATUS), "SITE_SLOPE_400m"=seq(0,40, by=10), "DEPTH_c"=seq(min(set$DEPTH_c,na.rm=TRUE),max(set$DEPTH_c,na.rm=TRUE),length.out=25), re_formula=NA)
   
-  # centre and scale depth
-  newdat$DEPTH_c <- (newdat$DEPTH - mean(set$DEPTH))/sd(set$DEPTH)
+  # centre and scale SITE_SLOPE_400m
+  newdat$SITE_SLOPE_400m_c <- (newdat$SITE_SLOPE_400m - mean(set$SITE_SLOPE_400m))/sd(set$SITE_SLOPE_400m)
   
-  # order predictions by populations status and depth so that they can be extracted easily below
-  newdat <- newdat[order(newdat$POP_STATUS,newdat$DEPTH_c),]
+  # order predictions by populations status and SITE_SLOPE_400m so that they can be extracted easily below
+  newdat <- newdat[order(newdat$POP_STATUS,newdat$SITE_SLOPE_400m_c),]
   
   # predict from posterior
   t3 <- posterior_epred(get(models[i]), newdata=newdat, allow_new_levels=TRUE, re_formula = NA)
@@ -55,31 +54,31 @@ for(i in 1: length(dats)){
   # extract samples for populated (works because of ordering step)
   tp <- t3[,((dim(t3)[2]/2)+1):dim(t3)[2]]
   
-  # calculate differences in samples between depths 
-  # i.e. difference in TotFish between 5 and 0m, 10 and 5m, 15 and 10m etc
+  # calculate differences in samples between SITE_SLOPE_400m 
+  # i.e. difference in TotFish between 10 and 0 degrees, 20 and 10 degrees, 30 and 20 degrees etc
   
   # create storage 
-  tdif <- matrix(NA, nrow=(dim(tu)[2]/length(unique(newdat$DEPTH)))*dim(tu)[1], ncol=(length(unique(newdat$DEPTH))-1))
-  tdifp <- matrix(NA, nrow=(dim(tp)[2]/length(unique(newdat$DEPTH)))*dim(tp)[1], ncol=(length(unique(newdat$DEPTH))-1))
+  tdif <- matrix(NA, nrow=(dim(tu)[2]/length(unique(newdat$SITE_SLOPE_400m)))*dim(tu)[1], ncol=(length(unique(newdat$SITE_SLOPE_400m))-1))
+  tdifp <- matrix(NA, nrow=(dim(tp)[2]/length(unique(newdat$SITE_SLOPE_400m)))*dim(tp)[1], ncol=(length(unique(newdat$SITE_SLOPE_400m))-1))
   depnms<- c()
   
-  # use loop to split samples matrices by depth (works because of order step earlier)
-  # each iteration will calculate the difference between two depths 
-  for(j in 1:(length(unique(newdat$DEPTH))-1)){
+  # use loop to split samples matrices by SITE_SLOPE_400m (works because of order step earlier)
+  # each iteration will calculate the difference between two SITE_SLOPE_400m levels 
+  for(j in 1:(length(unique(newdat$SITE_SLOPE_400m))-1)){
     # unpopulated first
-    lower <- as.vector(tu[,(((j-1)*(dim(tu)[2]/length(unique(newdat$DEPTH))))+1):(j*(dim(tu)[2]/length(unique(newdat$DEPTH))))]) # extract all samples at the lower depth
-    upper <- as.vector(tu[,((j*(dim(tu)[2]/length(unique(newdat$DEPTH))))+1):((1+j)*(dim(tu)[2]/length(unique(newdat$DEPTH))))]) # extract all samples at the upper depth
+    lower <- as.vector(tu[,(((j-1)*(dim(tu)[2]/length(unique(newdat$SITE_SLOPE_400m))))+1):(j*(dim(tu)[2]/length(unique(newdat$SITE_SLOPE_400m))))]) # extract all samples at the lower SITE_SLOPE_400m
+    upper <- as.vector(tu[,((j*(dim(tu)[2]/length(unique(newdat$SITE_SLOPE_400m))))+1):((1+j)*(dim(tu)[2]/length(unique(newdat$SITE_SLOPE_400m))))]) # extract all samples at the upper SITE_SLOPE_400m
     
     tdif[,j] <- upper - lower   # take difference between samples (samples are still paired, and therefore obtained under the same conditions)
     
     # and for populated 
-    lowerp <- as.vector(tp[,(((j-1)*(dim(tp)[2]/length(unique(newdat$DEPTH))))+1):(j*(dim(tp)[2]/length(unique(newdat$DEPTH))))])
-    upperp <- as.vector(tp[,((j*(dim(tp)[2]/length(unique(newdat$DEPTH))))+1):((j+1)*(dim(tp)[2]/length(unique(newdat$DEPTH))))])
+    lowerp <- as.vector(tp[,(((j-1)*(dim(tp)[2]/length(unique(newdat$SITE_SLOPE_400m))))+1):(j*(dim(tp)[2]/length(unique(newdat$SITE_SLOPE_400m))))])
+    upperp <- as.vector(tp[,((j*(dim(tp)[2]/length(unique(newdat$SITE_SLOPE_400m))))+1):((j+1)*(dim(tp)[2]/length(unique(newdat$SITE_SLOPE_400m))))])
     
     tdifp[,j] <- upperp - lowerp  
     
-    # get names of depths being compared for ease of reading later
-    depnms <- c(depnms, paste0(unique(newdat$DEPTH)[j], " to ", unique(newdat$DEPTH)[j+1]))
+    # get names of SITE_SLOPE_400m being compared for ease of reading later
+    depnms <- c(depnms, paste0(unique(newdat$SITE_SLOPE_400m)[j], " to ", unique(newdat$SITE_SLOPE_400m)[j+1]))
     
   }
   
@@ -119,8 +118,8 @@ rownames(popstore_dec) <- depnms
 unpopstore
 popstore
 
-write_csv(as.data.frame(popstore), 'table1a.csv')
-write_csv(as.data.frame(unpopstore), 'table1b.csv')
+write_csv(as.data.frame(popstore), 'tableS10.csv')
+write_csv(as.data.frame(unpopstore), 'tableS10b.csv')
 
 
 # could just have calculated the decrease as 1 - the probability of increase: 
