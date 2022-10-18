@@ -50,4 +50,32 @@ for(j in 1:length(models)){
 
 dev.off()
 
-write_csv(as.data.frame(dum1), 'tableS13.csv')
+
+
+# Table S
+
+q5 <- c()
+
+for(j in 1:length(models)){
+  v1 <- posterior_samples(get(paste(models[j])), pars='sd')
+  
+  per5 <- data.frame(Ecoregion = v1$sd_ECOREGION__Intercept, Island = v1$sd_ISLAND__Intercept, Site = v1$sd_SITE__Intercept)
+  
+  if(hurd[j]==1){
+    per5 <- data.frame(Ecoregion = v1$sd_ECOREGION__Intercept+v1$sd_ECOREGION__hu_Intercept, Island = v1$sd_ISLAND__Intercept + v1$sd_ISLAND__hu_Intercept, Site = v1$sd_SITE__Intercept + v1$sd_SITE__hu_Intercept)
+  }
+  
+  # get medians and CIs 
+  
+  q4 <- t(apply(per5, 2, FUN=function(x1) {quantile(x1, probs=c(0.5, 0.025, 0.125, 0.875, 0.975))}))
+  
+    # store 
+  q4 <- as.data.frame(q4)
+  q4$Model <- rep(nms[j],dim(q4)[1])
+  q4$Spatial <- rownames(q4)
+  q4 <- q4[order(rev(q4$Spatial)),]
+  q5 <- rbind(q5,q4)
+  
+}
+
+write_csv(as.data.frame(q5), 'tableS11.csv')
