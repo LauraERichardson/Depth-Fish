@@ -17,7 +17,7 @@ source('plot_opts.R')
 
 # storage
 
-unpopstore <- matrix(NA, nrow=length(seq(0,30, by=10))-1, ncol=length(dats)) # this one will contain the prob of any increase for unpopulated
+unpopstore <- matrix(NA, nrow=length(seq(0,40, by=10))-1, ncol=length(dats)) # this one will contain the prob of any increase for unpopulated
 popstore <- unpopstore   # # this one will contain the prob of any increase for populated
 unpopstore_dec <- unpopstore    # # this one will contain the prob of any decrease for unpopulated
 popstore_dec <- unpopstore      # # this one will contain the prob of any decrease for populated
