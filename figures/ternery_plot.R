@@ -50,4 +50,4 @@ for(j in 1:length(models)){
 
 dev.off()
 
-write_csv(as.data.frame(per5), 'tableS13.csv')
+write_csv(as.data.frame(dum1), 'tableS13.csv')
