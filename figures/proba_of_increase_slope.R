@@ -1,15 +1,77 @@
 library(tidyverse)
-library(ggridges)
 library(brms)
 library(tidybayes)
+library(patchwork)
+
+if(!require(ggridges)) install.packages('ggridges')
 
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
+############ # Figure 3: Probability of proportional increase  (across 0-30m depth; at unpop islands; with slope held constant)
+
+
+
+pp <- parallel::mclapply(1:length(models), function(i) {
+  set <- get(dats[i])
+  newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
+                                   "SITE_SLOPE_400m_c"=seq(0,40, by=10), 
+                                   "DEPTH"=mean(set$DEPTH_c,na.rm=TRUE),
+                                   "ISLAND"='FOO', 
+                                   "ECOREGION"='FOO', 
+                                   "SITE"='FOO',
+                                   "DIVER"='FOO',
+                                   "OBS_YEAR"='FOO'))
+  
+  newdat$SITE_SLOPE_400m_c_c <- (newdat$SITE_SLOPE_400m_c - mean(set$SITE_SLOPE_400m_c))/sd(set$SITE_SLOPE_400m_c)
+  newdat$trophic_group <- factor(nms[i], levels = nms)
+  
+  newdat %>% 
+    add_epred_draws(get(models[i]), 
+                    re_formula = NA, seed = 123, dpar=TRUE)
+  
+}, mc.cores = 5) %>% bind_rows()
+
+
+# g1
+pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
+  select(-OBS_YEAR,-DEPTH_c,-ISLAND,-ECOREGION,-SITE,- DIVER,-.chain,-.iteration) %>%
+  arrange(trophic_group, POP_STATUS, .draw, SITE_SLOPE_400m) %>%
+  mutate(
+    hu = ifelse(is.na(hu),0,hu),
+    expect = (1-hu)*mu*10, # convert to kg/ha
+    diff = expect - lag(expect)) %>%
+  filter(!is.na(diff)) %>%
+  group_by(trophic_group) %>% 
+  filter(diff <= quantile(diff,0.99))
+
+g1 <- ggplot() + 
+  geom_density_ridges2(
+    aes(x=diff, 
+        y = POP_STATUS,
+        fill=trophic_group,
+        col=trophic_group
+    ),alpha=0.4,data=pp_bdp) +
+  scale_fill_manual('',values = mycols, guide='none') +
+  scale_colour_manual('',values = mycols, guide='none') +
+  scale_alpha_discrete('') +
+  facet_wrap(trophic_group~SITE_SLOPE_400m, scales='free', ncol=3) + 
+  ylab('Density') +
+  xlab('Biomass change with steepness bin (degrees)') +
+  geom_vline(xintercept=0, linetype=2) +
+  cowplot::theme_cowplot() + 
+  theme(
+    strip.background = element_blank(),
+    strip.text = element_blank(),
+    axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
+  )
+
+ggsave('Figure4B_alt.png',width = 8, height = 5, units = 'in',dpi = 150)
+
 ############ # Figure 4B Probability of proportional increase  
 
-png('Figure4B.png',width = 3, height = 7, units = 'in', res=150)
+png('Figure4B_old.png',width = 3, height = 7, units = 'in', res=150)
 
 # calculate the changes 
 
