@@ -45,19 +45,23 @@ allcis$troph <- factor(allcis$troph, levels=unique(allcis$troph))
 # remove smooths
 allcis <- allcis[-grep('bs',allcis$var),]
 
+# remove hurdle terms
+allcis <- allcis[-grep('dpar',allcis$var),]
+
 # rename the variables 
 allcis$var <- as.factor(allcis$var)
 levels(allcis$var) <- c("Depth",
                         "Depth:Pop Status", 
-                        "Depth hurdle",
-                        "Depth:Pop Status hurdle",
-                        "Pop Status hurdle",
-                        "Steepness hurdle",
+                        #"Depth hurdle",
+                        #"Depth:Pop Status hurdle",
+                        #"Pop Status hurdle",
+                        #"Steepness hurdle",
                         "Pop Status",
                         "Steepness")
 
 
-desired_order <- c("Depth:Pop Status hurdle","Pop Status hurdle","Steepness hurdle","Depth hurdle","Depth:Pop Status","Pop Status","Steepness","Depth") 
+#desired_order <- c("Depth:Pop Status hurdle","Pop Status hurdle","Steepness hurdle","Depth hurdle","Depth:Pop Status","Pop Status","Steepness","Depth") 
+desired_order <- c("Depth:Pop Status","Pop Status","Steepness","Depth") 
 allcis$var <- factor(allcis$var, levels=desired_order)
 allcis$var_num <- as.numeric(allcis$var)
 allcis <- allcis[order(allcis$troph,allcis$var),]
