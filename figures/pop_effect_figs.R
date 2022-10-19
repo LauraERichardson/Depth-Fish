@@ -52,12 +52,12 @@ levels(allcis$var) <- c("Depth",
                         "Depth hurdle",
                         "Depth:Pop Status hurdle",
                         "Pop Status hurdle",
-                        "Slope hurdle",
+                        "Steepness hurdle",
                         "Pop Status",
-                        "Slope")
+                        "Steepness")
 
 
-desired_order <- c("Depth:Pop Status hurdle","Pop Status hurdle","Slope hurdle","Depth hurdle","Depth:Pop Status","Pop Status","Slope","Depth") 
+desired_order <- c("Depth:Pop Status hurdle","Pop Status hurdle","Steepness hurdle","Depth hurdle","Depth:Pop Status","Pop Status","Steepness","Depth") 
 allcis$var <- factor(allcis$var, levels=desired_order)
 allcis$var_num <- as.numeric(allcis$var)
 allcis <- allcis[order(allcis$troph,allcis$var),]
