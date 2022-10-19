@@ -5,11 +5,11 @@ set -ex
 dir /input/
 
 export CLOUD_RUN="TRUE"
-#Rscript pop_effect_figs.R # doesn't work with new int terms in s()
+Rscript pop_effect_figs.R # doesn't work with new int terms in s()
 #Rscript depth_dens_plot.R
 #Rscript slope_dens_plot.R
 #Rscript proba_of_increase_plot.R
-Rscript proba_of_increase_slope.R
+#Rscript proba_of_increase_slope.R
 #Rscript ternery_plot.R
 #Rscript Table1.R
 #Rscript TablesS7_S8.R
