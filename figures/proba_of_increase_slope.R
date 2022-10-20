@@ -11,7 +11,7 @@ source('plot_opts.R')
 
 ############ # Figure 4B Probability of proportional increase  
 
-png('Figure4B.png',width = 3, height = 8, units = 'in', res=150)
+png('Figure4B.eps',width = 4, height = 10, units = 'in', res=150)
 
 # calculate the changes 
 
