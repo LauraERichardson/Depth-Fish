@@ -46,13 +46,14 @@ for(j in 1:length(models)){
   TernaryArrows(dum1, c(1-dum2[2],dum2[2],0), length = 0.02, col ='black')
   TernaryArrows(dum1, c(dum2[1],0,1-dum2[1]), length = 0.02, col ='black')
   TernaryArrows(dum1, c(0,1-dum2[3],dum2[3]), length = 0.02, col ='black')
+  #strip.background = element_rect(colour = "black", fill = "white"),
+  #strip.text.x = element_text(face = 'bold')
 }
 
 dev.off()
 
 
-
-# Table S
+# Table S11
 
 q5 <- c()
 
