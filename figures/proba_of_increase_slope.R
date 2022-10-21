@@ -1,7 +1,9 @@
 library(tidyverse)
-library(ggridges)
 library(brms)
 library(tidybayes)
+library(patchwork)
+
+if(!require(ggridges)) install.packages('ggridges')
 
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
@@ -9,7 +11,7 @@ source('plot_opts.R')
 
 ############ # Figure 4B Probability of proportional increase  
 
-png('Figure4B.png',width = 3, height = 7, units = 'in', res=150)
+png('Figure4B.pdf',width = 4, height = 10, units = 'in', res=150)
 
 # calculate the changes 
 
