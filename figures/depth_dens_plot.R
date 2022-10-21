@@ -29,9 +29,10 @@ phu <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   pp <- posterior_epred(get(models[i]), 
                         newdata = get(models[i])$data %>% 
-                          mutate(SITE_SLOPE_400m_c=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE)))
+                          mutate(SITE_SLOPE_400m_c=mean(set$SITE_SLOPE_400m_c,na.rm=TRUE)),
+                        re_formula = NA)
   
-  data.frame(dens = posterior_summary(pp)[,1],
+  data.frame(dens = posterior_summary(pp, robust = T)[,'Estimate'] + residuals(get(models[i]), robust=TRUE)[,'Estimate'],
              DEPTH = get(models[i])$data$DEPTH*sd(fish$DEPTH) + mean(fish$DEPTH),
              POP_STATUS = get(models[i])$data$POP_STATUS,
              trophic_group = factor(nms[i], levels = nms))
@@ -41,9 +42,10 @@ phu <- parallel::mclapply(1:length(models), function(i) {
 # restrict axis to plotted intervals
 phu <- phu %>% inner_join(pp_bd %>% group_by(trophic_group) %>% summarise(md = max(.upper))) %>%
   group_by(trophic_group) %>%
-  filter(dens<=md*1.05)
+  filter(dens<=md*1.05,
+         dens>=0)
 
-g1 <- ggplot() + 
+ggplot() + 
   geom_point(aes(x=DEPTH, y=dens*10,col=trophic_group), alpha=0.2, data=phu%>% filter(POP_STATUS=='U')) +
   geom_point(aes(x=DEPTH, y=dens*10), col='grey50', alpha=0.05, data=phu%>% filter(POP_STATUS=='P')) +
   geom_ribbon(aes(x=DEPTH, fill=trophic_group, ymin=.lower*10, ymax=.upper*10),  alpha=0.5, data=pp_bd %>% filter(POP_STATUS=='U')) +

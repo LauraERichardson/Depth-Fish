@@ -33,9 +33,10 @@ phus <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   pp <- posterior_epred(get(models[i]), 
                         newdata = get(models[i])$data %>% 
-                          mutate(DEPTH_c=mean(set$DEPTH_c)))
+                          mutate(DEPTH_c=mean(set$DEPTH_c)),
+                        re_formula=NA)
   
-  data.frame(dens = posterior_summary(pp)[,1],
+  data.frame(dens = posterior_summary(pp, robust = T)[,'Estimate'] + residuals(get(models[i]), robust=TRUE)[,'Estimate'],
              SITE_SLOPE_400m = get(models[i])$data$SITE_SLOPE_400m*sd(fish$SITE_SLOPE_400m) + mean(fish$SITE_SLOPE_400m),
              POP_STATUS = get(models[i])$data$POP_STATUS,
              trophic_group = factor(nms[i], levels = nms))
@@ -47,7 +48,8 @@ phus <- phus %>% inner_join(pp_bds %>%
                               group_by(trophic_group) %>% 
                               summarise(md = max(.upper))) %>%
   group_by(trophic_group) %>%
-  filter(dens<=md*1.05)
+  filter(dens<=md*1.05,
+         dens>=0)
 
 ggplot() + 
   geom_point(aes(x=SITE_SLOPE_400m, y=dens*10,col=trophic_group), alpha=0.2, data=phus%>% filter(POP_STATUS=='U')) +
