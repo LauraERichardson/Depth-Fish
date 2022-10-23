@@ -14,7 +14,8 @@ source('plot_opts.R')
 
 # Fig S1: all population level effects (including hurdle)
 
-png('FigureS1.png',width = 6, height = 6, units = 'in', res=150)
+pdf('FigureS1.pdf',width = 6, height = 6)
+
 allcis <- c()
 
 for(i in 1:length(models)){
@@ -96,7 +97,7 @@ dev.off()
 
 # Fig. 1 (plot without hurdle effects)
 
-png('Figure1.png',width = 6, height = 6, units = 'in', res=150)
+pdf('Figure1.pdf',width = 6, height = 6)
 
 # WITHOUT HU COMPONENTS:
 
