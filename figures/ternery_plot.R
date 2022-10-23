@@ -12,7 +12,7 @@ source('plot_opts.R')
 
 ############## display percentage of random effect variance from each other as a ternary plot 
 
-png('Figure5.png',width = 7, height = 6, units = 'in', res=150)
+pdf('Figure5.pdf',width = 7, height = 6)
 
 # Figure 5
 gmean <- function(x) exp(mean(log(x)))
