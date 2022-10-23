@@ -69,8 +69,7 @@ ggplot() +
     strip.text.x = element_text(face = 'bold')
   )
 
-
-ggsave('Figure4A_gg.png',width = 11.5, height = 5, units = 'in',dpi = 150, bg = "white")
+ggsave('Figure4A_gg.png',device="pdf", width = 7, height = 3, units = 'in',dpi = 300, bg = "white")
 
 
 ########## Figure 4A
