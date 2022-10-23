@@ -133,7 +133,7 @@ g3 <- pp_bd %>%
 
 g1+g2+g3 + patchwork::plot_layout(widths=c(0.70,0.15,0.15))
 
-ggsave('Figure3_alt.png',width = 10, height = 6, units = 'in',dpi = 150)
+ggsave('Figure3_alt.pdf',device="pdf", width = 7, height = 3, units = 'in',dpi = 300)
 
 
 ######
@@ -225,7 +225,7 @@ g2 <- ggplot() +
 
 g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
 
-ggsave('FigureS2.png',width = 7, height = 6, units = 'in',dpi = 150)
+ggsave('FigureS2.pdf',device="pdf", width = 7, height = 6, units = 'in',dpi = 300)
 
 ######
 
