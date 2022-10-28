@@ -63,7 +63,7 @@ ggplot() +
     strip.text.x = element_text(face = 'bold')
   )
 
-ggsave('Figure2_gg.png',width = 12, height = 5, units = 'in',dpi = 150, bg = "white")
+ggsave('Figure2_gg.pdf', device="pdf", width = 12, height = 5, units = 'in',dpi = 300, bg = "white")
 
 
 ###### 2. Interaction effects
