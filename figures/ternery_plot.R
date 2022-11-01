@@ -53,7 +53,7 @@ for(j in 1:length(models)){
 dev.off()
 
 
-# Table S11
+# Table S10
 
 q5 <- c()
 
@@ -79,4 +79,4 @@ for(j in 1:length(models)){
   
 }
 
-write_csv(as.data.frame(q5), 'tableS11.csv')
+write_csv(as.data.frame(q5), 'tableS10.csv')
