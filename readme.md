@@ -6,16 +6,17 @@
  - run_models.R: attention - runs all models, may over-write existing files!
  
  ### Figures:
- - pop_effect_figs.R: figures for population level effects
+ - pop_effect_figs.R: figures for population level effects (Figure 1, Figure S1)
  - depth_dens_plot.R: Figure 2
- - slope_dens_plot.R: same as Fig 2, but with slope
- - proba_of_increase_plot.R: Different options for plotting proba of increase
- - proba_of_increase_slope.R: Proba of increase (not changed)
- - ternery_plot.R: ternary variance partitioning
+ - proba_of_increase_plot.R: Different options for plotting probability of increase in biomass (Figure 3A-C, Figure S2A-B)
+ - slope_dens_plot.R: Figure 4A 
+ - proba_of_increase_slope.R: Figure 4B
+ - ternery_plot.R: ternary variance partitioning (Figure 5B, Table S10)
  
  - plot_opts.R: global plotting options
  
  ### Tables
  
- - TABLE 1: proba of increase by trophic group, depth bin and pop status
- - TABLE 2: proba that density increases more rapidly with depth at populated islands relative to unpopulated islands, by trophic group and depth bin
+ - Table 1.R: Table 1 Proba of increase by trophic group, depth bin and pop status
+ - Summary tables: Table S4 Model coefficient estimate summaries; Table S5 Max probability of effect estimates; Table S6 Unadjusted Bayesian R2 values; Table S11 Proba of difference in variation among scales
+ - TablesS7_S8.R: Table S7 Proba of greater absolute increase; Table S8 Proba of greater proportionate increase (%)
