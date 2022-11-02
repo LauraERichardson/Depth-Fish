@@ -1,8 +1,3 @@
-# R FIGURE code for Richardson et al 2022
-# Finalized on 26th July 2022
-
-# By LE Richardson, AJ Delargy and P Neubauer 
-
 library(tidyverse)
 library(brms)
 
@@ -10,9 +5,9 @@ library(brms)
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
-# get fixed effects samples from posterior and calculate CIs (as quantiles)
+############ 
 
-# Fig S1: all population level effects (including hurdle)
+# Figure S1: all population level effects (including hurdle)
 
 pdf('FigureS1.pdf',width = 6, height = 6)
 
@@ -93,9 +88,9 @@ axis(side=2,at=1:length(desired_order), labels=desired_order, las=1)  # add labe
 
 dev.off()
 
+############ 
 
-
-# Fig. 1 (plot without hurdle effects)
+# Figure 1: (plot without hurdle effects)
 
 pdf('Figure1.pdf',width = 6, height = 6)
 
@@ -177,3 +172,7 @@ for(i in 1:length(unique(allcis$troph))){
 axis(side=2,at=1:length(desired_order), labels=desired_order, las=1)  # add labels to y-axis
 
 dev.off()
+
+###################################################################
+
+# End
