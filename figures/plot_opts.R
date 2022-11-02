@@ -14,5 +14,3 @@ nms <- c("Total biomass", "Primary consumer","Planktivore","Secondary consumer",
 mycols <- c("#0072B2","#009E73","#56B4E9","#CC79A7","#E69F00")
 hurd  <- c(F,F,T,F,T)
 #desired_order <- c("Depth","Slope","Pop_Status","Depth:Pop_Status","Depth Slope smooth 1","Depth Slope smooth 2") 
-# in the above line you can specify the order of fixed effects on the y-axis of the below plot 
-# names of of each variable must exactly match those used to label the row names of q3 below 
