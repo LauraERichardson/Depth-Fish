@@ -11,9 +11,10 @@ export CLOUD_RUN="TRUE"
 #Rscript slope_dens_plot.R
 #Rscript proba_of_increase_plot.R
 #Rscript proba_of_increase_slope.R
-Rscript ternery_plot.R
+#Rscript ternery_plot.R
 #Rscript Table1.R
 #Rscript TablesS7_S8.R
+summary_tables.R
 
 
 
