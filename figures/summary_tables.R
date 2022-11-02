@@ -10,9 +10,9 @@ source('plot_opts.R')
 # Summary tables S4, S5, S6, S11
 
 summaries <- lapply(models, function(models){
-  list(tableS4 = summary(models),
+  list(tableS4 = summary(models))
        #tableS5 = bayestestR::p_direction(models, effects="fixed"),
-       tableS6 = performance::r2_bayes(models))#,
+       #tableS6 = performance::r2_bayes(models))#,
        #tableS11 = sds <- posterior_samples(models, pars = 'sd'),
        #length(which(sds$sd_ECOREGION__Intercept > sds$sd_ISLAND__Intercept))/length(sds$sd_ECOREGION__Intercept),
        #length(which(sds$sd_ECOREGION__Intercept > sds$sd_SITE__Intercept))/length(sds$sd_ECOREGION__Intercept),
