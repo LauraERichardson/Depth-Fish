@@ -7,6 +7,10 @@ library(patchwork)
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
+############## 
+
+# Figure 2: depth and population status: ggplot version
+
 pphu <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(expand.grid("POP_STATUS"=levels(set$POP_STATUS), 
@@ -201,4 +205,7 @@ mtext("Depth (m)", side=1, line=-1, outer=TRUE)
 mtext("Fish biomass (kg/ha)", side=2,line=-1, outer=TRUE)
 #legend.fun("top", legend=c("Populated", rep("Unpopulated", length(models))), lty=1, lwd=3, col=c("gray55",mycols), bty='n', cex=1.2, ncol=length(models)+1)
 dev.off()
-####
+
+###################################################################
+
+# End
