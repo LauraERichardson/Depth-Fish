@@ -1,6 +1,3 @@
-
-# By LE Richardson, AJ Delargy and P Neubauer 
-
 require(tidyverse)
 library(brms)
 if(!require(Ternary)) install.packages('Ternary')
@@ -10,7 +7,9 @@ require(Ternary)
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
-############## display percentage of random effect variance from each other as a ternary plot 
+############## 
+
+# Figure 5: percentage of group-level spatial term variance as a ternary plot 
 
 pdf('Figure5.pdf',width = 7, height = 6)
 
@@ -80,3 +79,7 @@ for(j in 1:length(models)){
 }
 
 write_csv(as.data.frame(q5), 'tableS10.csv')
+
+###################################################################
+
+# End
