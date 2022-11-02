@@ -1,6 +1,4 @@
 library(brms)
-library(bayestestR)
-library(performance)
 
 # load models and data from common script
 source('load_data_and_models_for_figs.R')
