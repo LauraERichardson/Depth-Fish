@@ -12,7 +12,7 @@ source('plot_opts.R')
 
 summaries <- lapply(models, function(models){
   list(tableS4 = summary(models),
-       tableS5 = p_direction(models, effects="fixed"),
+       tableS5 = bayestestR::p_direction(models, effects="fixed"),
        tableS6 = performance::r2_bayes(models))#,
        #tableS11 = sds <- posterior_samples(models, pars = 'sd'),
        #length(which(sds$sd_ECOREGION__Intercept > sds$sd_ISLAND__Intercept))/length(sds$sd_ECOREGION__Intercept),
