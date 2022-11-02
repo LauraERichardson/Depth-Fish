@@ -9,7 +9,9 @@ if(!require(ggridges)) install.packages('ggridges')
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
-############ # Figure 4B Probability of proportional increase  
+############ 
+
+# Figure 4B: probability of proportional increase with slope
 
 pdf('Figure4B.pdf',width = 4, height = 12)
 
@@ -127,5 +129,8 @@ for(i in 1:length(unique(mainstore$model))){
 mtext("Probability of increased biomass", side=2, line=0.5, outer=TRUE)
 #mtext(rev(nms), side=2, line=-0.5, at=((1:5)/5)-0.1, outer=TRUE)
 dev.off()
+
 ###################################################################
-###################################################################
+
+# End
+
