@@ -9,8 +9,9 @@ if(!require(ggridges)) install.packages('ggridges')
 source('load_data_and_models_for_figs.R')
 source('plot_opts.R')
 
-############ # Figure 3: Probability of biomass increase  (across 0-30m depth; at unpop islands; with slope held constant)
+############ 
 
+# Figure 3: Probability of biomass increase  (across 0-30m depth; at unpop islands; with slope held constant)
 
 
 pp <- parallel::mclapply(1:length(models), function(i) {
@@ -138,7 +139,7 @@ ggsave('Figure3_alt.pdf',device="pdf", width = 10, height = 6, units = 'in',dpi 
 
 ######
 
-#Fig. S2
+#Figure S2: proportionate change with depth bins
 
 pp <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
@@ -409,3 +410,7 @@ mtext("Unpopulated", side=2, at=0.75, line=-0.5, outer=TRUE)
 mtext("Populated", side=2, at=0.25, line=-0.5, outer=TRUE)
 #legend.fun("top", legend=nms, pch=16, col=mycols, bty='n', ncol=length(nms), cex=1.5)
 dev.off()
+
+###################################################################
+
+# End
