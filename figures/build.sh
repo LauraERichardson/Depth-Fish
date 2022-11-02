@@ -14,7 +14,7 @@ export CLOUD_RUN="TRUE"
 #Rscript ternery_plot.R
 #Rscript Table1.R
 #Rscript TablesS7_S8.R
-summary_tables.R
+Rscript summary_tables.R
 
 
 
