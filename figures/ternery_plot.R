@@ -1,6 +1,5 @@
 require(tidyverse)
 library(brms)
-if(!require(Ternary)) install.packages('Ternary')
 require(Ternary)
 
 # load models and data from common script
