@@ -1,4 +1,4 @@
-docker: dragonflyscience/dragonverse-22.04:2022-09-12
+docker: dragonflyscience/dragonverse-22.04:2022-11-04
 memory: 16
 cpus: 4
 requires: ["PACIFIC-FISH-DEPTH-MODELS"]

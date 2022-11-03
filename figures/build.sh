@@ -23,6 +23,12 @@ then
     cp *.csv ${OUTPUTDIR}/.
 fi
 
+
+if test -n "$(find . -maxdepth 1 -name '*.txt' -print -quit)"
+then
+    cp *.txt ${OUTPUTDIR}/.
+fi
+
 if test -n "$(find . -maxdepth 1 -name '*.pdf' -print -quit)"
 then
     cp *.pdf ${OUTPUTDIR}/.
