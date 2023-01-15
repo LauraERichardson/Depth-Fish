@@ -36,13 +36,14 @@ ppds <- ppd %>%
             ymaxs = unique(ymaxs))
 
 ggplot() + 
-  geom_pointrange(aes(x=ISLAND, y=Estimate, ymax=Q97.5, ymin=Q2.5, col=trophic_group,size=POP_STATUS,linewidth=POP_STATUS), data=ppd) +
+  geom_point(aes(x=ISLAND, y=Estimate, col=trophic_group), data=ppd) +
+  geom_linerange(aes(x=ISLAND, y=Estimate, ymax=Q97.5, ymin=Q2.5, col=trophic_group,size=POP_STATUS), data=ppd) +
   scale_fill_manual('',values = mycols, guide='none') +
   scale_colour_manual('',values = mycols, guide='none') +
   geom_rect(aes(xmin=xmins, xmax=xmaxs, ymin=ymins, ymax=ymaxs, fill=trophic_group, col= trophic_group,alpha=ECOREGION), data=ppds) +
   scale_alpha_discrete('EcoRegion',range=c(0.05,0.6),breaks=function(x) rev(x)) +
-  scale_linewidth_discrete('',range=c(0.5,1.1), guide='none') +
-  scale_size_discrete('',range=c(0.4,0.6), guide='none') +
+  #scale_linewidth_discrete('',range=c(0.5,1.1), guide='none') +
+  scale_size_discrete('',range=c(0.6,1.1), guide='none') +
   facet_wrap(~trophic_group, scales='free', nrow = 1) +
   geom_hline(yintercept = 0, linetype=2) +
   coord_flip() +
