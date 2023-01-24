@@ -45,7 +45,7 @@ ggplot() +
   #scale_linewidth_discrete('',range=c(0.5,1.1), guide='none') +
   scale_size_discrete('',range=c(0.6,1.1), guide='none') +
   #facet_wrap(~trophic_group, scales='free', nrow = 1) +
-  facet_grid(~ECOREGION + trophic_group, scales='free') +
+  facet_wrap(~ECOREGION + trophic_group, scales='free') +
   geom_hline(yintercept = 0, linetype=2) +
   coord_flip() +
   xlab('Island') + 
