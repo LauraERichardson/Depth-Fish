@@ -56,7 +56,7 @@ ggplot() +
   )
 
 #ggsave('Figure_Isl_ER_depthfx.pdf', device="pdf", width = 20, height = 12, units = 'in',dpi = 300, bg = "white")
-ggsave('Figure_Isl_ER_depthfx.eps', device="eps", width = 20, height = 12, units = 'in',dpi = 300, bg = "white")
+ggsave('Figure_Isl_ER_depthfx.png', device="png", width = 20, height = 12, units = 'in',dpi = 300, bg = "white")
 
 
 
