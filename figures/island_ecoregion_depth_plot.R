@@ -33,7 +33,7 @@ ppd_l <- parallel::mclapply(1:length(models), function(i) {
 }, mc.cores=5) %>% bind_rows()
 
 
-ppd <- ppd_l %>% median_qi(.epred) %>% group_by(trophic_group, ECOREGION) %>% arrange(ECOREGION, POP_STATUS, .epred) 
+ppd <- ppd_l %>% median_qi(.epred) %>% group_by(trophic_group, ECOREGION) %>% arrange(ECOREGION, POP_STATUS, ISLAND) 
 ppd$ISLAND <- forcats::fct_inorder(ppd$ISLAND)
 ppds <- ppd %>%
   group_by(trophic_group) %>%
