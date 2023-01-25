@@ -55,8 +55,8 @@ ggplot() +
     strip.text.x = element_text(face = 'bold')
   )
 
-#ggsave('Figure_Isl_ER_depthfx.pdf', device="pdf", width = 20, height = 12, units = 'in',dpi = 300, bg = "white")
-ggsave('Figure_Isl_ER_depthfx.png', device="png", width = 20, height = 12, units = 'in',dpi = 300, bg = "white")
+ggsave('Figure_Isl_ER_depthfx.pdf', device="pdf", width = 20, height = 12, units = 'in',dpi = 300, bg = "white")
+#ggsave('Figure_Isl_ER_depthfx.png', device="png", width = 20, height = 12, units = 'in',dpi = 300, bg = "white")
 
 
 
