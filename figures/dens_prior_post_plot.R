@@ -29,7 +29,7 @@ pphus <- parallel::mclapply(1:length(models), function(i) {
   
   post_int$trophic_group = factor(nms[i], levels = nms)
   post_int
-  
+  browser()
 }, mc.cores = 5) %>% bind_rows()
 
 ggplot(pphus) +
