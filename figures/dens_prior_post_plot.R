@@ -13,7 +13,7 @@ pphus <- parallel::mclapply(1:length(models), function(i) {
  
   post_int <- as_draws_df(get(models[i]),'b_(.*_)?Intercept',regex = T) %>% 
     mutate(Intercept = exp(b_Intercept)) %>% 
-    mutate(across(contains('b_hu_Intercept'),~(1-inv_logit(.x))*Intercept))
+    mutate(across(contains('b_hu_Intercept'),~(1-inv_logit_scaled(.x))*Intercept))
   
   iter <- nrow(post_int)
    
@@ -22,14 +22,14 @@ pphus <- parallel::mclapply(1:length(models), function(i) {
   psd <- as.numeric(gsub(".*\\([0-9].[0-9]*,([0-9]).*","\\1",pos_prior))
   
   if(input_frame$HURDLE[i]){
-    post_int$priors <- inv_logit(rlogis(iter, -2, 0.5)) * exp(rnorm(iter, pm, psd))
+    post_int$priors <- inv_logit_scaled(rlogis(iter, -2, 0.5)) * exp(rnorm(iter, pm, psd))
   } else {
     post_int$priors <- exp(rnorm(iter, pm, psd))
   }
   
   post_int$trophic_group = factor(nms[i], levels = nms)
   post_int
-  browser()
+  
 }, mc.cores = 5) %>% bind_rows()
 
 ggplot(pphus) +
