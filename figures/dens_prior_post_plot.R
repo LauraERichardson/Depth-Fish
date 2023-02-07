@@ -42,5 +42,6 @@ ggplot(pphus) +
   cowplot::theme_cowplot() 
 
 
-ggsave('Prior_post_dens.pdf',device="pdf", width = 10, height = 6, units = 'in',dpi = 300)
+#ggsave('Prior_post_dens.pdf',device="pdf", width = 10, height = 6, units = 'in',dpi = 300)
+ggsave('Prior_post_dens.png', device="png", width = 10, height = 6, units = 'in',dpi = 300, bg = "white")
 
