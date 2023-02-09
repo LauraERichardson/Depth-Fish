@@ -3,7 +3,7 @@ library(brms)
 
 inv_logit <- function(z) 1/(1 + exp(-z))
 set.seed(123)
-# Finalized on 26th July 2022
+# Finalized on 9th Feb 2023
 
 # By LE Richardson, AJ Delargy and P Neubauer 
 
@@ -32,7 +32,7 @@ sd(log(rlnorm(10000, 4.6, 0.21)*rbeta(10000,10,40)*(1-inv_logit(rlogis(10000,-2,
 
 # Prior mean set to log of the expected intercept, with prior sd inflated to reflect uncertainty about translating ranges from MacNeil et al. 2015
 prior_PISC <- set_prior('normal(2.78,1)', class='Intercept')
-
+prior_PISC_SJ <- set_prior('normal(2.78,1)', class='Intercept')
 
 #PLANK: MacNeil et al. Extended Data Figure 6: Average reef fish functional group across a biomass gradient
 #Prop: 0.3 mean
@@ -93,13 +93,15 @@ input_frame <- data.frame(
             'PISC',
             'PLANK',
             'PRIM',
-            'SEC'),
+            'SEC',
+            'PISC_SJ'),
   RESP  = c( "TotFish", ## model responses
             'PISCIVORE',
             'PLANKTIVORE',
             'PRIMARY',
-            'SECONDARY'),
-  HURDLE = c(F, T, T, F, F) ## Run hurdle?
+            'SECONDARY',
+            'PISCIVORE_SJs'),
+  HURDLE = c(F, T, T, F, F, T) ## Run hurdle?
 )
 
 run_depth_model <- function(input_frame, 
