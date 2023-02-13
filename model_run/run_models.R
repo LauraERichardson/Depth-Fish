@@ -3,6 +3,7 @@ library(brms)
 
 inv_logit <- function(z) 1/(1 + exp(-z))
 set.seed(123)
+
 # Finalized on 9th Feb 2023
 
 # By LE Richardson, AJ Delargy and P Neubauer 
@@ -167,7 +168,7 @@ run_depth_model <- function(input_frame,
   
 }
 
-parallel::mclapply(c(1,4,5,2,3),function(m) {
+parallel::mclapply(c(1,4,5,2,3,6),function(m) {
   run_depth_model(input_frame[m,], 
                   iter = 2500,
                   warmup=500)
