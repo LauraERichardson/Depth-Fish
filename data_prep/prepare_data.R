@@ -25,11 +25,12 @@ fish$OBS_YEAR <- factor(fish$OBS_YEAR, levels = c("2010", "2011","2012","2013","
 #Remove islands: Wake (already removed Gardner, Laysan, Maro, Midway, Necker, Nihoa, South Bank)
 fish <- fish[!(fish$ISLAND %in% c('Wake')),] %>% droplevels
 
-#Remove some sites: PAL-00107, GUA-00410, PHR-00341 (already removed)
-fish <- fish[!(fish$SITE %in% c('PAL-00107', 'GUA-00410','PHR-00341')),] %>% droplevels
+#Remove some sites: 
+fish <- fish[!(fish$SITE %in% c('PAL-00107', 'GUA-00410','PHR-00341','TUT-00376','TUT-00516','OAH-00159','OAH-00418','OAH-00435',
+                                'OAH-00439','OAH-00450','SAI-00271')),] %>% droplevels
 
 #Also remove inner Maug sites because site slope data unreliable:
-fish <- fish[!(fish$SITE %in% c('MAU-00077', 'MAU-00124', 'MAU-00162', 'MAU-00163', 'MAU-00174', 'MAU-00178', 'MAU-00179',
+fish <- fish[!(fish$SITE %in% c('MAU-00072','MAU-00077', 'MAU-00124', 'MAU-00162', 'MAU-00163', 'MAU-00174', 'MAU-00178', 'MAU-00179',
                                 'MAU-00208', 'MAU-00218', 'MAU-00279','MAU-00281','MAU-00282','MAU-00284','MAU-00285','MAU-00294',
                                 'MAU-00334','MAU-00339')),] %>% droplevels
 
