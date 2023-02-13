@@ -6,7 +6,7 @@ dir /input/
 
 export CLOUD_RUN="TRUE"
 #Rscript -e "R.version; installed.packages(fields = 'Version')[,'Version']"
-Rscript pop_effect_figs.R # doesn't work with new int terms in s()
+#Rscript pop_effect_figs.R # doesn't work with new int terms in s()
 Rscript depth_dens_plot.R
 Rscript slope_dens_plot.R
 Rscript proba_of_increase_plot.R
