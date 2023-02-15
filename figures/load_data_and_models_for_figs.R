@@ -18,9 +18,9 @@ models <- c("TotFish.Gamma.brms.full",
             "PLANK.Gamma.brms.HU.full",
             "SEC.Gamma.brms.full",
             "PISC.Gamma.brms.HU.full",
-            "PISC_SJ.Gamma.brms.HU.full")
+            "SJ_P.Gamma.brms.HU.full")
 
-dats <- c("fish","PRIM","PLANK","SEC","PISC","PISC_SJ")
+dats <- c("fish","PRIM","PLANK","SEC","PISC","SJ_P")
 
 ord <- sapply(input_frame$SHORT, grep, models, ignore.case = T)
 
