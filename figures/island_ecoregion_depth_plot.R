@@ -14,9 +14,10 @@ source('plot_opts.R')
 ppd_l <- parallel::mclapply(1:length(models), function(i) {
   set <- get(dats[i])
   newdat <- data.frame(distinct(set %>% select(ECOREGION, ISLAND, POP_STATUS)) %>% 
-                         mutate(DEPTH_c=1,
+                         mutate(DEPTH_c=0,
                                 SITE_SLOPE_400m_c=0))
   newdat$trophic_group <- factor(nms[i], levels = nms)
+  newdat <- newdat %>% bind_rows(newdat %>% mutate(DEPTH_c=1))
   
   nd1 <- newdat %>% 
     add_epred_draws(get(models[i]), 
@@ -28,12 +29,16 @@ ppd_l <- parallel::mclapply(1:length(models), function(i) {
                     re_formula = NA, seed = 123, dpar=TRUE)%>%
     mutate(IFX = 0)
   
-  bind_rows(nd1, nd2) %>% group_by(trophic_group, ECOREGION, ISLAND, POP_STATUS,.row, .draw) %>% summarise(.epred = .epred[1]/.epred[2])
+  bind_rows(nd1, nd2) %>% 
+    group_by(trophic_group, ECOREGION, ISLAND, POP_STATUS,IFX, .draw) %>% 
+    arrange(trophic_group, ECOREGION, ISLAND, POP_STATUS,IFX,  .draw) %>% 
+    summarise(.epred = .epred[2]/.epred[1])
   
 }, mc.cores=5) %>% bind_rows()
 
 
-ppd <- ppd_l %>% median_qi(.epred) %>% group_by(trophic_group, ECOREGION) %>% arrange(ECOREGION, POP_STATUS, ISLAND) 
+ppd <- ppd_l %>% filter(IFX==1) %>% median_qi(.epred) %>% group_by(trophic_group, ECOREGION) %>% arrange(ECOREGION, POP_STATUS, ISLAND) 
+ppdnot <- ppd_l %>% filter(IFX==0) %>% median_qi(.epred) %>% group_by(trophic_group, ECOREGION) %>% arrange(ECOREGION, POP_STATUS, ISLAND) 
 ppd$ISLAND <- forcats::fct_inorder(ppd$ISLAND)
 ppds <- ppd %>%
   group_by(trophic_group) %>%
@@ -47,6 +52,7 @@ ppds <- ppd %>%
 
 ggplot() + 
   geom_point(aes(x=ISLAND, y=.epred, col=trophic_group), data=ppd) +
+  geom_linerange(aes(x=ISLAND, y=.epred, ymax=.upper, ymin=.lower, col=trophic_group),alpha=0.5,size=2, data=ppdnot) +
   geom_linerange(aes(x=ISLAND, y=.epred, ymax=.upper, ymin=.lower, col=trophic_group,size=POP_STATUS), data=ppd) +
   scale_fill_manual('',values = mycols, guide='none') +
   scale_colour_manual('',values = mycols, guide='none') +
@@ -55,7 +61,7 @@ ggplot() +
   #scale_linewidth_discrete('',range=c(0.5,1.1), guide='none') +
   scale_size_discrete('',range=c(0.6,1.1), guide='none') +
   facet_wrap(~trophic_group, scales='free', nrow = 1) +
-  geom_hline(yintercept = 1, linetype=2) +
+  geom_hline(yintercept = 1, linetype=3) +
   coord_flip() +
   xlab('Island') + 
   ylab("Depth effect") +
