@@ -95,7 +95,7 @@ input_frame <- data.frame(
             'PLANK',
             'PRIM',
             'SEC',
-            'P_SJ'),
+            'SJ_P'),
   RESP  = c( "TotFish", ## model responses
             'PISCIVORE',
             'PLANKTIVORE',
