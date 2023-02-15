@@ -13,10 +13,10 @@ export CLOUD_RUN="TRUE"
 #Rscript proba_of_increase_slope.R
 #Rscript island_ecoregion_depth_plot.R
 #Rscript ternery_plot.R
-#Rscript Table1.R
+Rscript Table1.R
 #Rscript TablesS7_S8.R
 #Rscript summary_tables.R
-Rscript dens_prior_post_plot.R
+#Rscript dens_prior_post_plot.R
 
 
 if test -n "$(find . -maxdepth 1 -name '*.csv' -print -quit)"
