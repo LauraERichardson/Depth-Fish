@@ -9,7 +9,7 @@ legend.fun<-function(...){
 }
 
 # plot display names 
-nms <- c("Total biomass", "Primary consumer","Planktivore","Secondary consumer","Piscivore","Piscivore_all")
+nms <- c("Total biomass", "Primary consumer","Planktivore","Secondary consumer","Piscivore","Piscivore_SJ")
 # colour for each model
 mycols <- c("#0072B2","#009E73","#56B4E9","#CC79A7","#E69F00","#D55E00")
 hurd  <- c(F,F,T,F,T,T)
