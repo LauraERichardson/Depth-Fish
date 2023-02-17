@@ -21,7 +21,7 @@ models <- c("TotFish.Gamma.brms.full",
 
 dats <- c("fish","PRIM","PLANK","SEC","PISC")
 
-ord <- sapply(input_frame$SHORT, grep, models, ignore.case = T)
+ord <- sapply(input_frame$SHORT[1:5], grep, models, ignore.case = T)
 
 lapply(1:length(models), function(idx){
   assign(models[ord[idx]], read_rds(paste0(mod_dir,
