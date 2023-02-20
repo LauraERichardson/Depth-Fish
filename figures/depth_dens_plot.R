@@ -50,8 +50,8 @@ phu <- phu %>% inner_join(pp_bd %>% group_by(trophic_group) %>% summarise(md = m
          dens>=0)
 
 ggplot() + 
-  geom_point(aes(x=DEPTH, y=dens*10,col=trophic_group), alpha=0.2, size=4, data=phu%>% filter(POP_STATUS=='U')) +
-  geom_point(aes(x=DEPTH, y=dens*10), col='grey50', alpha=0.05,size=4, data=phu%>% filter(POP_STATUS=='P')) +
+  geom_point(aes(x=DEPTH, y=dens*10,col=trophic_group), alpha=0.2, size=1.5, data=phu%>% filter(POP_STATUS=='U')) +
+  geom_point(aes(x=DEPTH, y=dens*10), col='grey50', alpha=0.05,size=1.5, data=phu%>% filter(POP_STATUS=='P')) +
   geom_ribbon(aes(x=DEPTH, fill=trophic_group, ymin=.lower*10, ymax=.upper*10),  alpha=0.5, data=pp_bd %>% filter(POP_STATUS=='U')) +
   geom_ribbon(aes(x=DEPTH, ymin=.lower*10, ymax=.upper*10),  alpha=0.5, fill='grey50', data=pp_bd %>% filter(POP_STATUS=='P')) +
   geom_line(aes(x=DEPTH, col=trophic_group, y=.epred*10, group=POP_STATUS), data=pp_bd %>% filter(POP_STATUS=='U')) +
