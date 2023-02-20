@@ -126,15 +126,15 @@ g3 <- pp_bd %>%
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
-    axis.text.y = element_text(size = 10),
-    legend.text = element_text(size=10)
+    axis.text.x = element_text(size = 7, angle = 45, vjust = 1, hjust = 1),
+    axis.text.y = element_text(size = 7),
+    legend.text = element_text(size=7)
   )
 
 
 g1+g2+g3 + patchwork::plot_layout(widths=c(0.70,0.15,0.15))
 
-ggsave('Figure3_alt.pdf',device="pdf", width = 7, height = 4, units = 'in',dpi = 300)
+ggsave('Figure3_alt.pdf',device="pdf", width = 7, height = 5, units = 'in',dpi = 300)
 
 
 ######
