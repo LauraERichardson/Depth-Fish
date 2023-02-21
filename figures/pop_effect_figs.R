@@ -9,7 +9,7 @@ source('plot_opts.R')
 
 # Figure S1: all population level effects (including hurdle)
 
-pdf('FigureS1.pdf',width = 6, height = 6)
+pdf('FigureS1.pdf',width = 8, height = 6)
 
 allcis <- c()
 
