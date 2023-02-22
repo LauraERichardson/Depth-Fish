@@ -187,7 +187,7 @@ g1 <- pp_bd %>%
   theme(
     strip.background = element_blank(),
     strip.text = element_blank(),
-    axis.text.x = element_text(size = 7, angle = 45, vjust = 1, hjust = 1)
+    axis.text.x = element_text(size = 8, angle = 45, vjust = 1, hjust = 1)
   )
 
 pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
@@ -220,8 +220,8 @@ g2 <- ggplot() +
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_text(size = 7, angle = 45, vjust = 1, hjust = 1),
-    axis.text.y = element_text(size = 7),
+    axis.text.x = element_text(size = 8, angle = 45, vjust = 1, hjust = 1),
+    axis.text.y = element_text(size = 8),
     )
 
 g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
