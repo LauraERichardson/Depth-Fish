@@ -53,8 +53,8 @@ phus <- phus %>% inner_join(pp_bds %>%
          dens>=0)
 
 ggplot() + 
-  geom_point(aes(x=SITE_SLOPE_400m, y=dens*10,col=trophic_group), alpha=0.2, data=phus%>% filter(POP_STATUS=='U')) +
-  geom_point(aes(x=SITE_SLOPE_400m, y=dens*10), col='grey50', alpha=0.05, data=phus%>% filter(POP_STATUS=='P')) +
+  geom_point(aes(x=SITE_SLOPE_400m, y=dens*10,col=trophic_group), alpha=0.2,size=0.5,data=phus%>% filter(POP_STATUS=='U')) +
+  geom_point(aes(x=SITE_SLOPE_400m, y=dens*10), col='grey50', alpha=0.05, size=0.5,data=phus%>% filter(POP_STATUS=='P')) +
   geom_ribbon(aes(x=SITE_SLOPE_400m, fill=trophic_group, ymin=.lower*10, ymax=.upper*10),  alpha=0.5, data=pp_bds %>% filter(POP_STATUS=='U')) +
   geom_ribbon(aes(x=SITE_SLOPE_400m, ymin=.lower*10, ymax=.upper*10),  alpha=0.5, fill='grey50', data=pp_bds %>% filter(POP_STATUS=='P')) +
   geom_line(aes(x=SITE_SLOPE_400m, col=trophic_group, y=.epred*10, group=POP_STATUS), data=pp_bds %>% filter(POP_STATUS=='U')) +
@@ -70,7 +70,7 @@ ggplot() +
     strip.text.x = element_text(face = 'bold')
   )
 
-ggsave('Figure4A_gg.pdf',device="pdf", width = 11.5, height = 5, units = 'in',dpi = 300, bg = "white")
+ggsave('Figure4A_gg.pdf',device="pdf", width = 7, height = 3, units = 'in',dpi = 300, bg = "white")
 
 
 ########## Figure 4A

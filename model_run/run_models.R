@@ -33,7 +33,7 @@ sd(log(rlnorm(10000, 4.6, 0.21)*rbeta(10000,10,40)*(1-inv_logit(rlogis(10000,-2,
 
 # Prior mean set to log of the expected intercept, with prior sd inflated to reflect uncertainty about translating ranges from MacNeil et al. 2015
 prior_PISC <- set_prior('normal(2.78,1)', class='Intercept')
-prior_PISC_SJ <- set_prior('normal(2.78,1)', class='Intercept')
+prior_SJ_P <- set_prior('normal(2.78,1)', class='Intercept')
 
 #PLANK: MacNeil et al. Extended Data Figure 6: Average reef fish functional group across a biomass gradient
 #Prop: 0.3 mean

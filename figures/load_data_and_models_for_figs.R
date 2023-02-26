@@ -17,12 +17,11 @@ models <- c("TotFish.Gamma.brms.full",
             "PRIM.Gamma.brms.full",
             "PLANK.Gamma.brms.HU.full",
             "SEC.Gamma.brms.full",
-            "PISC.Gamma.brms.HU.full",
-            "SJ_P.Gamma.brms.HU.full")
+            "PISC.Gamma.brms.HU.full")
 
-dats <- c("fish","PRIM","PLANK","SEC","PISC","SJ_P")
+dats <- c("fish","PRIM","PLANK","SEC","PISC")
 
-ord <- sapply(input_frame$SHORT, grep, models, ignore.case = T)
+ord <- sapply(input_frame$SHORT[1:5], grep, models, ignore.case = T) # Use all models but ignore PISC_SJ model (with 1:5)
 
 lapply(1:length(models), function(idx){
   assign(models[ord[idx]], read_rds(paste0(mod_dir,

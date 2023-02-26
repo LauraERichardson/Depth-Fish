@@ -65,7 +65,7 @@ g1 <- ggplot() +
   theme(
     strip.background = element_blank(),
     strip.text = element_blank(),
-    axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
+    axis.text.x = element_text(size = 7, angle = 45, vjust = 1, hjust = 1),
     )
   
 
@@ -95,8 +95,8 @@ g2 <- pp_bd %>%
   theme(
   strip.background = element_blank(),
   strip.text.x = element_blank(),
-  axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
-  axis.text.y = element_text(size = 10),
+  axis.text.x = element_text(size = 7, angle = 45, vjust = 1, hjust = 1),
+  axis.text.y = element_text(size = 7),
   legend.position="none"
 )
 
@@ -126,15 +126,15 @@ g3 <- pp_bd %>%
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
-    axis.text.y = element_text(size = 10),
-    legend.text = element_text(size=10)
+    axis.text.x = element_text(size = 7, angle = 45, vjust = 1, hjust = 1),
+    axis.text.y = element_text(size = 7),
+    legend.text = element_text(size=7)
   )
 
 
 g1+g2+g3 + patchwork::plot_layout(widths=c(0.70,0.15,0.15))
 
-ggsave('Figure3_alt.pdf',device="pdf", width = 10, height = 6, units = 'in',dpi = 300)
+ggsave('Figure3_alt.pdf',device="pdf", width = 7, height = 6.5, units = 'in',dpi = 300)
 
 
 ######
@@ -187,7 +187,8 @@ g1 <- pp_bd %>%
   theme(
     strip.background = element_blank(),
     strip.text = element_blank(),
-    axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1)
+    axis.text.x = element_text(size = 9, angle = 45, vjust = 1, hjust = 1),
+    axis.text.y = element_text(size = 9)
   )
 
 pp_bdp <- pp %>% group_by(trophic_group, .draw, POP_STATUS) %>%
@@ -220,13 +221,13 @@ g2 <- ggplot() +
   theme(
     strip.background = element_blank(),
     strip.text.x = element_blank(),
-    axis.text.x = element_text(size = 10, angle = 45, vjust = 1, hjust = 1),
-    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 9, angle = 45, vjust = 1, hjust = 1),
+    axis.text.y = element_text(size = 9),
     )
 
 g2+g1 + patchwork::plot_layout(widths=c(0.75,0.25))
 
-ggsave('FigureS2.pdf',device="pdf", width = 7, height = 6, units = 'in',dpi = 300)
+ggsave('FigureS2.png',device="png", width = 7, height = 6, units = 'in',dpi = 300)
 
 ######
 
