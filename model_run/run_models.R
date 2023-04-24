@@ -34,6 +34,7 @@ sd(log(rlnorm(10000, 4.6, 0.21)*rbeta(10000,10,40)*(1-inv_logit(rlogis(10000,-2,
 # Prior mean set to log of the expected intercept, with prior sd inflated to reflect uncertainty about translating ranges from MacNeil et al. 2015
 prior_PISC <- set_prior('normal(2.78,1)', class='Intercept')
 prior_SJ_P <- set_prior('normal(2.78,1)', class='Intercept')
+prior_Shark_jack <- set_prior('normal(2.78,1)', class='Intercept')
 
 #PLANK: MacNeil et al. Extended Data Figure 6: Average reef fish functional group across a biomass gradient
 #Prop: 0.3 mean
@@ -95,14 +96,16 @@ input_frame <- data.frame(
             'PLANK',
             'PRIM',
             'SEC',
-            'SJ_P'),
+            'SJ_P',
+            'Shark_jack'),
   RESP  = c( "TotFish", ## model responses
             'PISCIVORE',
             'PLANKTIVORE',
             'PRIMARY',
             'SECONDARY',
-            'PISCIVORE_SJs'),
-  HURDLE = c(F, T, T, F, F, T) ## Run hurdle?
+            'PISCIVORE_SJs',
+            'Shark_jack'),
+  HURDLE = c(F, T, T, F, F, T,T) ## Run hurdle?
 )
 
 run_depth_model <- function(input_frame, 
@@ -168,7 +171,7 @@ run_depth_model <- function(input_frame,
   
 }
 
-parallel::mclapply(c(1,4,5,2,3,6),function(m) {
+parallel::mclapply(c(1,4,5,2,3,6,7),function(m) {
   run_depth_model(input_frame[m,], 
                   iter = 2500,
                   warmup=500)
