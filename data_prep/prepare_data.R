@@ -42,6 +42,10 @@ UNPOP<-subset(fish,POP_STATUS=="U") %>% droplevels
 fish$DEPTH_c <-scale(fish$DEPTH, center = TRUE, scale = TRUE)
 fish$SITE_SLOPE_400m_c<-scale(fish$SITE_SLOPE_400m, center = TRUE, scale = TRUE)
 
+#Add column for shark and semi-pelagic jack biomass:
+
+fish$Sharks_jacks<-fish$PISCIVORE_SJs-fish$PISCIVORE
+
 dir.create('../intermed_data')
 save.image('../intermed_data/Depth_study_fish_data.RData')
 write.csv(fish,"../intermed_data/Depth_study_fish_data.csv")
