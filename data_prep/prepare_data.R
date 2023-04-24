@@ -44,7 +44,7 @@ fish$SITE_SLOPE_400m_c<-scale(fish$SITE_SLOPE_400m, center = TRUE, scale = TRUE)
 
 #Add column for shark and semi-pelagic jack biomass:
 
-fish$Sharks_jacks<-fish$PISCIVORE_SJs-fish$PISCIVORE
+fish$Shark_jack<-fish$PISCIVORE_SJs-fish$PISCIVORE
 
 dir.create('../intermed_data')
 save.image('../intermed_data/Depth_study_fish_data.RData')
