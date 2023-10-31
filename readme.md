@@ -1,4 +1,8 @@
 # Depth-Fish
+Citation for publication: https://doi.org/10.1038/s41559-023-02201-x
+
+Citation for data and code: [![DOI](https://zenodo.org/badge/540168963.svg)](https://zenodo.org/doi/10.5281/zenodo.10058102)
+
 ## Sequence of files to run:
 
  ### Data and models 
